@@ -1,9 +1,14 @@
 import './App.css'
 import styled from 'styled-components'
+import { AppRoutes } from './components/Routes/Routes'
 
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  width: 100%;
+`
 
 function App() {
-
   const test = {
     "id": 1,
     "category": "mixers",
@@ -21,11 +26,12 @@ function App() {
     }
   }
 
+
+
   return (
-    <>
-      <div>{test.title}</div>
-      <img src={test.img} alt="" style={{width: '300px', filter: 'drop-shadow(5px 5px 3px #9e9e9e)'}}/>
-    </>
+    <Wrapper >
+      <AppRoutes />
+    </Wrapper>
   )
 }
 
