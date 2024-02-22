@@ -5,6 +5,7 @@ declare module "styled-components" {
     colors: {
       black: string;
       blue: string;
+      gray: string;
       darkGray: string;
       lightGray: string;
       white: string;
@@ -17,7 +18,11 @@ declare module "styled-components" {
     transition: {
       fast: string,
       slow: string
+    },
+    padding: {
+      primary: string,
     }
+
   }
 }
 
@@ -25,6 +30,7 @@ const theme = {
   colors: {
     black: "#222222",
     blue: "#007de1",
+    gray: '#9a9a9a',
     darkGray: "#262626",
     lightGray: "#f7f7f7",
     white: "#fff",
@@ -37,6 +43,9 @@ const theme = {
   transition: {
     fast: "0.3s",
     slow: "1s"
+  },
+  padding: {
+    primary: "20px",
   }
 };
 

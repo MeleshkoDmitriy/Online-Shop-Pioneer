@@ -1,14 +1,27 @@
-import './App.css'
 import styled from 'styled-components'
 import { AppRoutes } from './components/Routes/Routes'
+import { Header } from './components/Header/Header'
+import { Footer } from './components/Footer/Footer'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { getCategories } from './Redux/Slices/categoriesSlice'
 
 
 const Wrapper = styled.div`
   min-height: 100vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategories())
+  }, [dispatch])
+
   const test = {
     "id": 1,
     "category": "mixers",
@@ -30,7 +43,9 @@ function App() {
 
   return (
     <Wrapper >
+      <Header />
       <AppRoutes />
+      <Footer />
     </Wrapper>
   )
 }

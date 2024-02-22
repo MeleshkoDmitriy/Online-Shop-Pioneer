@@ -1,26 +1,24 @@
 import styled from "styled-components"
-import { Footer } from "../../components/Footer/Footer"
-import { Header } from "../../components/Header/Header"
-import { Main } from "../../components/Main/Main"
+import { Container } from "../../styles/styles"
+import { Aside } from "../../components/Main/Aside/Aside"
+import { Content } from "../../components/Main/Content/Content"
 
 const HomePageWrapper = styled.div`
-    height: 100vh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-`
-const MainFlexWrapper = styled.div`
     flex: 1 1 auto;
 `
+
 
 export const HomePage = () => {
     return (
         <HomePageWrapper>
-            <Header />
-            <MainFlexWrapper >
-                <Main />
-            </MainFlexWrapper>
-            <Footer />
+            <Container >
+                <Aside />
+                <Content />
+            </Container>
         </HomePageWrapper>
     )
 }
