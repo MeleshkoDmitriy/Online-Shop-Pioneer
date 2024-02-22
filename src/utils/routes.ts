@@ -2,5 +2,6 @@ export const ROUTES = {
     HOME: '/',
     FAVORITES: '/favorites',
     CART: '/cart',
-    CATEGORY: '/categories/:id'
+    CATEGORY: '/categories/:id',
+    PRODUCT: '/products/:id'
 }

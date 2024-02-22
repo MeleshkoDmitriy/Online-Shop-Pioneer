@@ -6,18 +6,26 @@ import  defaultImage  from '../../../../assets/pioneer-dj-logo.png'
 const Li = styled.li`
     list-style-type: none;
     width: 200px;
-    height: 40px;
+    height: 80px;
     background-color: ${props => props.theme.colors.white};
-    border-radius: 10px;
+    border-radius: ${props => props.theme.borderRadius.primary};
+
 
     .container {
         display: flex;
         align-items: center;
+        height: 100%;
+        
     }
 
     .image {
-        width: 50px;
+        height: 60px;
         padding-left: 10px;
+        margin-right: 10px;
+    }
+
+    span {
+        font-size: 20px;
     }
 
     .line {

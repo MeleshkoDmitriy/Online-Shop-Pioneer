@@ -8,19 +8,17 @@ const AsideWrapper = styled.aside`
     padding: ${props => props.theme.padding.primary};
     background: ${props => props.theme.colors.lightGray};
 
-    .title {
-        font-size: 20px;
-    }
-
     ul {
         display: flex;
         flex-direction: column;
+        align-items: start;
         width: 200px;
         gap: ${props => props.theme.padding.primary};
         padding: 0;
+        margin: 0;
             li {
-            list-style-type: none;
-        }
+                list-style-type: none;
+            }
     } 
 
     .line {
@@ -57,10 +55,9 @@ export const Aside = () => {
     return (
         <AsideWrapper>
             <nav>
-                <div className="title"><b>Categories:</b></div>
                 <ul>
                     { isLoading ? <div>Loading..</div> :  list?.map((category) => {
-                                                                return <CategoryItem key={category.id} {...category} />})}
+                                                            return <CategoryItem key={category.id} {...category} />})}
                 </ul>
             </nav>
         </AsideWrapper>

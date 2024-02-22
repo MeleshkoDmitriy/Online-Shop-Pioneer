@@ -5,6 +5,7 @@ import { Footer } from './components/Footer/Footer'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getCategories } from './Redux/Slices/categoriesSlice'
+import { getProducts } from './Redux/Slices/productsSlice'
 
 
 const Wrapper = styled.div`
@@ -20,6 +21,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getCategories())
+    dispatch(getProducts())
   }, [dispatch])
 
   const test = {

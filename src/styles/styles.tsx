@@ -21,6 +21,9 @@ declare module "styled-components" {
     },
     padding: {
       primary: string,
+    },
+    borderRadius: {
+      primary: string
     }
 
   }
@@ -46,6 +49,9 @@ const theme = {
   },
   padding: {
     primary: "20px",
+  },
+  borderRadius: {
+    primary: '10px'
   }
 };
 
