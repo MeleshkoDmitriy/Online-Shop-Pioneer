@@ -10,6 +10,9 @@ const HeaderWrapper = styled.header`
     height: 70px;
     background-color: ${props => props.theme.colors.black};
     color: ${props => props.theme.colors.white};
+    position: sticky;
+    top: 0;
+    z-index: 10;
 `
 
 const LogoContainer = styled.div`

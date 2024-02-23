@@ -9,6 +9,7 @@ const Li = styled.li`
     height: 80px;
     background-color: ${props => props.theme.colors.white};
     border-radius: ${props => props.theme.borderRadius.primary};
+    transform: ${props => props.theme.transition.fast};
 
 
     .container {

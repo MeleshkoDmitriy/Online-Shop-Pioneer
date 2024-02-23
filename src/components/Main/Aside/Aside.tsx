@@ -8,6 +8,11 @@ const AsideWrapper = styled.aside`
     padding: ${props => props.theme.padding.primary};
     background: ${props => props.theme.colors.lightGray};
 
+    nav {
+        position: sticky;
+        top: 90px;
+    }
+
     ul {
         display: flex;
         flex-direction: column;
@@ -50,7 +55,7 @@ const AsideWrapper = styled.aside`
 export const Aside = () => {
 
     const { list, isLoading } = useSelector(({ categories }) => categories)
-    console.log(list)
+    // console.log(list)
 
     return (
         <AsideWrapper>
@@ -63,9 +68,3 @@ export const Aside = () => {
         </AsideWrapper>
     )
 }
-{/* <li><Link className="line" to={`/categories/${id}`} style={{textDecoration: 'none'}}>Mixers</Link></li>
-<li><Link className="line" to={`/categories/${id}`} style={{textDecoration: 'none'}}>Players</Link></li>
-<li><Link className="line" to={`/categories/${id}`} style={{textDecoration: 'none'}}>Controllers</Link></li>
-<li><Link className="line" to={`/categories/${id}`} style={{textDecoration: 'none'}}>Effectors</Link></li>
-<li><Link className="line" to={`/categories/${id}`} style={{textDecoration: 'none'}}>Headphones</Link></li>
-<li><Link className="line" to={`/categories/${id}`} style={{textDecoration: 'none'}}>Speakers</Link></li> */}

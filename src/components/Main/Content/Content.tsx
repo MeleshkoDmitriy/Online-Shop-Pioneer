@@ -6,6 +6,7 @@ const ContentWrapper = styled.section`
     width: 100%;
     min-height: 530px;
     padding: ${props => props.theme.padding.primary};
+    padding-right: 0;
     flex: 1 1 auto;
 `
 

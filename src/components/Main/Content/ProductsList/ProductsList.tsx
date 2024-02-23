@@ -1,26 +1,50 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { ProductItem } from "./ProductItem/ProductItem"
+import { useEffect } from "react"
+import { filterByPrice } from "../../../../Redux/Slices/productsSlice"
 
 
 const ListWrapper = styled.section`
     width: 100%;
-
-    border: 1px solid red;
-    margin-top: ${props => props.theme.padding.primary}
+    margin-top: ${props => props.theme.padding.primary};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: ${props => props.theme.padding.primary}
+    /* @media */
 `
 
 export const ProductsList = () => {
 
-    const { isLoading, list } = useSelector(({ products }) => products)
+    const dispatch = useDispatch()
+
+    const { products: { isLoading, list, filtered } } = useSelector((state) => state)
     console.log(list)
+    console.log(filtered)
+
+
+    useEffect(() => {
+        if(!list.length) return;
+
+        dispatch(filterByPrice(100))
+    }, [dispatch, list.length])
 
     return (
         <ListWrapper >
             {isLoading && <div>Loading...</div>}
-            {list.map((product) => {
-                return <ProductItem key={product.id} {...product} />
+            {list.map((item) => {
+                return <ProductItem key={item.id} {...item} />
             })}
         </ListWrapper>
     )
 }
+
+
+/* 
+{filtered.map((filter) => {
+            return <ProductItem key={filter.id} {...filter} />
+                        })} */
+
+            
