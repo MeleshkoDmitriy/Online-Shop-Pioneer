@@ -1,10 +1,11 @@
 import styled from "styled-components"
-import { Card, Image, Rate} from 'antd';
+import { Badge, Card, Collapse, Image, Rate } from 'antd';
 import Typography from "antd/es/typography/Typography";
 import { toCapitalize } from "../../utils/toCapitalize";
 import { HeartOutlined, HeartFilled, ShoppingOutlined, ShoppingFilled } from '@ant-design/icons';
 import { useSelector } from "react-redux";
 import defaultImage from '../../assets/pioneer-dj-logo.png'
+
 
 
 const SingleProductWrapper = styled.section`
@@ -27,7 +28,11 @@ const SingleProductWrapper = styled.section`
     }
     
     .description {
-        padding: ${props => props.theme.padding.primary};
+        width: 100%;
+        /* padding: ${props => props.theme.padding.primary}; */
+        margin-inline: ${props => props.theme.padding.primary};
+        text-align: justify;
+        text-indent: ${props => props.theme.padding.primary};
     }
 
     .title {
@@ -82,6 +87,7 @@ export const SingleProduct = (data) => {
         features
     } = data;
 
+
     const categoryImage = list.find((item) => {
         if(item.title === category) {
             return item;
@@ -101,7 +107,7 @@ export const SingleProduct = (data) => {
                       <Card title={title} 
                             className="card"
                             hoverable
-                            style={{width: 300}}
+                            style={{width: 300 }}
                             actions={[
                                 <HeartOutlined style={{fontSize: '20px'}} key="isFavorite" />,
                                 <ShoppingOutlined style={{fontSize: '20px'}} key="isCart"/>
@@ -118,12 +124,13 @@ export const SingleProduct = (data) => {
                                     alt={category}
                                     style={{width: "50px"}}
                                     src={categoryImage ? categoryImage.image : defaultImage}
+                                    title={category}
                                     />
                             </div>
                     </Card>
             </div>
             <div className="description">
-                <Paragraph >{description}</Paragraph>
+                <Collapse items={[{ key: 'Description', label: `${title} Description`, children: <Paragraph>{description}</Paragraph> }]} />
             </div>
         </SingleProductWrapper>
     )

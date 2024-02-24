@@ -24,16 +24,6 @@ export const ProductItem = (product) => {
 
     const { isSale } = features;
 
-    const isBadge = (obj: Record<string, boolean>): boolean => {
-        for (const key in obj) {
-          if (!obj[key]) {
-            return true;
-          }
-        }
-        return false;
-      };
-       
-
     return (
         <Link to={`/products/${id}`} style={{textDecoration: 'none'}}>
             <Badge.Ribbon text={defineFeatureString(features)} color={defineFeatureColor(features)}>

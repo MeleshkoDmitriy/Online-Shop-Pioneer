@@ -3,6 +3,7 @@ import LOGO from '../../assets/pioneer-dj-logo-white.png'
 import { Container } from "../../styles/styles"
 import { Link } from "react-router-dom"
 import { ROUTES } from "../../utils/routes"
+import { HeartOutlined, ShoppingOutlined, LoginOutlined } from '@ant-design/icons'
 
 
 const HeaderWrapper = styled.header`
@@ -26,13 +27,18 @@ const Menu = styled.ul`
     display: flex;
     gap: 20px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     transition: ${props => props.theme.transition.fast};
 
     .line {
         position: relative;
         display: inline-block;
         color: ${props => props.theme.colors.white};
+        transition: ${props => props.theme.transition.fast};
+
+        &:hover {
+            color: ${props => props.theme.colors.blue};
+        }
     }
 
     .line::after {
@@ -50,6 +56,12 @@ const Menu = styled.ul`
 
     .line:hover::after {
         transform: scaleX(1);
+        background-color: ${props => props.theme.colors.blue};
+    }
+
+    .line .icon {
+        font-size: 20px;
+        margin-left: 10px;
     }
 `
 
@@ -64,9 +76,9 @@ export const Header = () => {
                 </LogoContainer>
 
                 <Menu>
-                    <li className="line">Favorites</li>
-                    <li className="line">In Cart</li>
-                    <li className="line">Log In</li>
+                    <li className="line">Favorites<HeartOutlined className="icon" /></li>
+                    <li className="line">Cart<ShoppingOutlined className="icon"  /></li>
+                    <li className="line">Sign up<LoginOutlined className="icon"  /></li>
                 </Menu>
 
             </Container>

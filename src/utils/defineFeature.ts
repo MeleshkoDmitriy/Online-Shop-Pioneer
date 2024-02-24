@@ -24,7 +24,7 @@ export  const defineFeatureColor= (features: Features): string => {
     } else if (features.isTop) {
       return '#ffb700';
     } else {
-      return '#00dc00';
+      return '#00e339';
     }
 };
  

@@ -27,6 +27,8 @@ const Li = styled.li`
 
     span {
         font-size: 20px;
+        transition: ${props => props.theme.transition.fast};
+
     }
 
     .line {
@@ -50,6 +52,14 @@ const Li = styled.li`
 
     .line:hover::after {
         transform: scaleX(1);
+        background-color: ${props => props.theme.colors.blue};
+    }
+
+    span {
+        &:hover {
+            color: ${props => props.theme.colors.blue};
+            transition: ${props => props.theme.transition.fast};
+        }
     }
 `
 

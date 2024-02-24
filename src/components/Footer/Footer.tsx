@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Container } from "../../styles/styles"
+import { GithubOutlined } from '@ant-design/icons'
 
 const FooterWrapper = styled.footer`
     width: 100%;
@@ -13,7 +14,12 @@ const GitHubLink = styled.a`
     color: ${props => props.theme.colors.gray};
     text-decoration: none;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
+
+    &:hover > span {
+        color:  ${props => props.theme.colors.blue};
+        transition:  ${props => props.theme.transition.fast};
+    }
 
     .line {
         position: relative;
@@ -28,7 +34,7 @@ const GitHubLink = styled.a`
         bottom: -2px;
         height: 2px;
         width: 100%;
-        background-color: ${props => props.theme.colors.white};
+        background-color: ${props => props.theme.colors.blue};
         transform-origin: left;
         transform: scaleX(0);
         transition: ${props => props.theme.transition.fast};
@@ -49,7 +55,7 @@ export const Footer = () => {
                     <GitHubLink href="https://github.com/MeleshkoDmitriy/Online-Shop-Pioneer" 
                                 target="blank" 
                                 rel="noreferrer">
-                         <span className="line">GitHub.</span> Developed by Dmitriy Meleshko. Online Shop 2024.
+                         <span className="line"><GithubOutlined spin style={{fontSize: "20px"}} /> GitHub.</span> Developed by Dmitriy Meleshko. Online Shop 2024.
                     </GitHubLink>
                 </span>
             </Container>
