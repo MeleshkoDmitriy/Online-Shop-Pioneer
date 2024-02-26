@@ -3,7 +3,7 @@ import LOGO from '../../assets/pioneer-dj-logo-white.png'
 import { Container } from "../../styles/styles"
 import { Link } from "react-router-dom"
 import { ROUTES } from "../../utils/routes"
-import { HeartOutlined, ShoppingOutlined, LoginOutlined } from '@ant-design/icons'
+import { HeartOutlined, HeartFilled, ShoppingOutlined, ShoppingFilled, LoginOutlined } from '@ant-design/icons'
 import { Badge } from "antd"
 import { useSelector } from "react-redux"
 
@@ -93,12 +93,14 @@ export const Header = ({showFavorites, showCart}) => {
                 <Menu>
                     <li className="line" onClick={showFavorites}>Favorites
                         <Badge count={favorites.length} offset={[3, -2]} color="#007de1" size="small">
-                            <HeartOutlined className="icon" />
+                            {favorites.length   ? <HeartFilled className="icon" />
+                                                : <HeartOutlined className="icon" />}
                         </Badge>
                     </li>
                     <li className="line" onClick={showCart}>Cart
                         <Badge count={cart.length} offset={[3, -2]} color="#007de1" size="small">
-                            <ShoppingOutlined className="icon"  />
+                            {cart.length    ? <ShoppingFilled className="icon" />
+                                            : <ShoppingOutlined className="icon" />}
                         </Badge>
                     </li>
                     <li className="line">Sign up<LoginOutlined className="icon"  /></li>

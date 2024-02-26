@@ -40,6 +40,43 @@ const userSlice = createSlice({
             console.log(state.cart)
 
         },
+        minusProductFromCart: (state, { payload }) => {
+            let newCart = [...state.cart];
+
+            const productQuantity = state.cart.find((product) => {
+                if(product.id === payload.id) {
+                    return product.quantity;
+                }
+            });
+
+            if (productQuantity > 1) {
+                console.log('productQuantity' ,productQuantity)
+
+                newCart = newCart.map((item) => {
+                    return { ...item, quantity: --item.quantity }
+                })
+            } else {
+                console.log('productQuantity', productQuantity)
+                newCart = newCart.filter((product) => product.id !== payload.id)
+            }
+
+            state.cart = newCart;
+            console.log(state.cart)
+        },
+        removeProductFromCart: (state, { payload }) => {
+            let newCart = [...state.cart];
+
+            const foundProduct = state.cart.find(({ id }) => id === payload.id);
+
+            if (foundProduct) {
+                newCart = newCart.filter((product) => product.id !== payload.id)
+            } else {
+                return;
+            }
+
+            state.cart = newCart;
+            console.log(state.cart)
+        },
         addProductToFavorites: (state, { payload }) => {
             let newFavorites = [...state.favorites];
 
@@ -70,6 +107,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { addProductToCart, addProductToFavorites } = userSlice.actions;
+export const { addProductToCart, addProductToFavorites, removeProductFromCart, minusProductFromCart } = userSlice.actions;
 
 export default userSlice.reducer;

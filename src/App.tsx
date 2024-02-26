@@ -8,7 +8,8 @@ import { getCategories } from './Redux/Slices/categoriesSlice'
 import { getProducts } from './Redux/Slices/productsSlice'
 import { Drawer } from 'antd';
 import { HeartFilled, ShoppingFilled } from '@ant-design/icons';
-
+import { FavoritesDrawer } from './components/Drawers/FavoritesDrawer/FavoritesDrawer'
+import { CartDrawer } from './components/Drawers/CartDrawer/CartDrawer'
 
 
 const Wrapper = styled.div`
@@ -45,26 +46,26 @@ function App() {
     setOpenCart(false)
   }
 
-  const favoritesTitle = favorites.length   ? `You have ${favorites.length} favorite product(s)`
-                                            : "No favorite products yet";
+  const favoritesTitle = favorites.length   ? `Favorites: You have ${favorites.length} favorite product(s)`
+                                            : "Favorites: No favorite products yet";
 
-  const cartTitle = cart.length   ? `You have ${cart.length} product(s) in the cart`
-                                            : "No products in the cart yet";
+  const cartTitle = cart.length   ? `Cart: You have ${cart.length} product(s) in the cart`
+                                            : "Cart: No products in the cart yet";
 
   return (
     <Wrapper >
       <Header showFavorites={showFavorites} showCart={showCart} />
       <AppRoutes />
       <Footer />
-      <Drawer title={favoritesTitle}   onClose={onCloseFavorites} open={openFavorites}>
-        <p>Favorites</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <Drawer title={favoritesTitle}  
+              onClose={onCloseFavorites} 
+              open={openFavorites}>
+        <FavoritesDrawer favorites={favorites} />
       </Drawer>
-      <Drawer title={cartTitle} onClose={onCloseCart} open={openCart}>
-        <p>Cart</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <Drawer title={cartTitle} 
+              onClose={onCloseCart} 
+              open={openCart}>
+        <CartDrawer cart={cart} />
       </Drawer>
     </Wrapper>
   )

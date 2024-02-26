@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Badge, Card, Collapse, Image, Rate } from 'antd';
 import Typography from "antd/es/typography/Typography";
 import { toCapitalize } from "../../utils/toCapitalize";
-import { HeartOutlined, HeartFilled, ShoppingOutlined, ShoppingFilled } from '@ant-design/icons';
+import { HeartOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
 import defaultImage from '../../assets/pioneer-dj-logo.png'
 import { addProductToCart, addProductToFavorites } from "../../Redux/Slices/userSlice";
