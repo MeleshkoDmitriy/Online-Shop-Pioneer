@@ -2,10 +2,13 @@ import styled from 'styled-components'
 import { AppRoutes } from './components/Routes/Routes'
 import { Header } from './components/Header/Header'
 import { Footer } from './components/Footer/Footer'
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 import { getCategories } from './Redux/Slices/categoriesSlice'
 import { getProducts } from './Redux/Slices/productsSlice'
+import { Drawer } from 'antd';
+import { HeartFilled, ShoppingFilled } from '@ant-design/icons';
+
 
 
 const Wrapper = styled.div`
@@ -24,30 +27,45 @@ function App() {
     dispatch(getProducts())
   }, [dispatch])
 
-  const test = {
-    "id": 1,
-    "category": "mixers",
-    "title": "DJM-A9",
-    "price": 2996,
-    "img": "https://i.ibb.co/NnJCz0R/mixer-djm-a9.png",
-    "description": "4-канальная модель DJM-A9, значительно модифицированная по сравнению с предшествующей версией DJM-900NXS2, поднимает планку для микшеров клубного уровня. Этот микшер с усовершенствованными характеристиками отличается чистым звуком, обеспечивает разные варианты подключения к другому оборудованию, а также имеет множество новых функций, чтобы перевести уровень выступлений на новый уровень. Микшер DJM-A9 — это более совершенный музыкальный инструмент для эмоционального и динамичного шоу, где сохранен привычный функционал и компоновка, ставшие клубным стандартом.",
-    "rating": 4.5,
-    "isFavorite": false,
-    "isCart": false,
-    "features": {
-      "sale": false,
-      "new": false,
-      "top": false
-    }
+  const { favorites, cart } = useSelector(({ user }) => user)
+
+  const [ openFavorites, setOpenFavorites] = useState(false);
+  const showFavorites = () => {
+    setOpenFavorites(true)
+  }
+  const onCloseFavorites = () => {
+    setOpenFavorites(false)
   }
 
+  const [ openCart, setOpenCart] = useState(false);
+  const showCart = () => {
+    setOpenCart(true)
+  }
+  const onCloseCart = () => {
+    setOpenCart(false)
+  }
 
+  const favoritesTitle = favorites.length   ? `You have ${favorites.length} favorite product(s)`
+                                            : "No favorite products yet";
+
+  const cartTitle = cart.length   ? `You have ${cart.length} product(s) in the cart`
+                                            : "No products in the cart yet";
 
   return (
     <Wrapper >
-      <Header />
+      <Header showFavorites={showFavorites} showCart={showCart} />
       <AppRoutes />
       <Footer />
+      <Drawer title={favoritesTitle}   onClose={onCloseFavorites} open={openFavorites}>
+        <p>Favorites</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
+      <Drawer title={cartTitle} onClose={onCloseCart} open={openCart}>
+        <p>Cart</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
     </Wrapper>
   )
 }

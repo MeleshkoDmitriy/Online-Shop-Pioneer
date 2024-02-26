@@ -3,8 +3,11 @@ import { Badge, Card, Collapse, Image, Rate } from 'antd';
 import Typography from "antd/es/typography/Typography";
 import { toCapitalize } from "../../utils/toCapitalize";
 import { HeartOutlined, HeartFilled, ShoppingOutlined, ShoppingFilled } from '@ant-design/icons';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import defaultImage from '../../assets/pioneer-dj-logo.png'
+import { addProductToCart, addProductToFavorites } from "../../Redux/Slices/userSlice";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../utils/routes";
 
 
 
@@ -56,7 +59,7 @@ const SingleProductWrapper = styled.section`
             gap: 10px;
         }
 
-        img {
+        .img {
             align-self: flex-start;
         }
     }
@@ -77,6 +80,7 @@ export const SingleProduct = (data) => {
     const { 
         id, 
         category,
+        categoryId,
         title,
         img,
         price,
@@ -87,6 +91,15 @@ export const SingleProduct = (data) => {
         features
     } = data;
 
+    const dispatch = useDispatch()
+
+    const addToCart = () => {
+        dispatch(addProductToCart(data))
+    }
+
+    const addToFavorites = () => {
+        dispatch(addProductToFavorites(data))
+    }
 
     const categoryImage = list.find((item) => {
         if(item.title === category) {
@@ -109,8 +122,14 @@ export const SingleProduct = (data) => {
                             hoverable
                             style={{width: 300 }}
                             actions={[
-                                <HeartOutlined style={{fontSize: '20px'}} key="isFavorite" />,
-                                <ShoppingOutlined style={{fontSize: '20px'}} key="isCart"/>
+                                <HeartOutlined  onClick={addToFavorites}
+                                                style={{fontSize: '20px'}} 
+                                                title="Add to Favorites" 
+                                                key="isFavorite" />,
+                                <ShoppingOutlined   onClick={addToCart} 
+                                                    title="Add to Cart" 
+                                                    style={{fontSize: '20px'}} 
+                                                    key="isCart"/>
                             ]}>
                             <div className="cardInfo">
                                 <div className="info">
@@ -118,14 +137,16 @@ export const SingleProduct = (data) => {
                                         {Math.floor(price * 1.43)} BYN</span>}
                                     </p>
                                     <Rate style={{margin: '10px 0'}} disabled allowHalf value={rating}/>
-                                    <Meta description={category ? toCapitalize(category) : category} />      
+                                    <Meta description={category ? <Link to={`/categories/${categoryId}`}>{toCapitalize(category)}</Link> : <Link to={`/categories/${categoryId}`}>{category}</Link>} />      
                                 </div>
-                                <img
-                                    alt={category}
-                                    style={{width: "50px"}}
-                                    src={categoryImage ? categoryImage.image : defaultImage}
-                                    title={category}
-                                    />
+                                <Link className="img" to={`/categories/${categoryId}`}>
+                                    <img
+                                        alt={category}
+                                        style={{width: "50px"}}
+                                        src={categoryImage ? categoryImage.image : defaultImage}
+                                        title={category}
+                                        />
+                                </Link>
                             </div>
                     </Card>
             </div>

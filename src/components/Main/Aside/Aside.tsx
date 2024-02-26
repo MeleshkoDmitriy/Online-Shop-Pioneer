@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useSelector } from "react-redux"
 import { CategoryItem } from "./CategoryItem/CategoryItem"
+import { useEffect } from "react"
 
 const AsideWrapper = styled.aside`
     width: 200px;
@@ -52,17 +53,19 @@ const AsideWrapper = styled.aside`
 
 
 
-export const Aside = () => {
+export const Aside = ({isActiveId}) => {
 
-    const { list, isLoading } = useSelector(({ categories }) => categories)
-    // console.log(list)
+    
+
+    const { list, isLoading } = useSelector(({ categories }) => categories);
+
 
     return (
         <AsideWrapper>
             <nav>
                 <ul>
                     { isLoading ? <div>Loading..</div> :  list?.map((category) => {
-                                                            return <CategoryItem key={category.id} {...category} />})}
+                                                            return <CategoryItem key={category.id} isActiveId={isActiveId} {...category} />})}
                 </ul>
             </nav>
         </AsideWrapper>

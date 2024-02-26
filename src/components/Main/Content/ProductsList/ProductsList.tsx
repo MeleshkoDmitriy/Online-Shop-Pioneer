@@ -22,13 +22,13 @@ export const ProductsList = () => {
 
     const { products: { isLoading, list, filtered } } = useSelector((state) => state)
     console.log(list)
-    console.log(filtered)
+    console.log('f', filtered)
 
 
     useEffect(() => {
         if(!list.length) return;
 
-        dispatch(filterByPrice(100))
+        dispatch(filterByPrice(1))
     }, [dispatch, list.length])
 
     return (

@@ -31,7 +31,7 @@ const categoriesSlice = createSlice({
             state.list = action.payload;
         });
         builder.addCase(getCategories.rejected, (state) => {
-            state.isLoading = false;
+            // state.isLoading = false;
         });
     },
 });

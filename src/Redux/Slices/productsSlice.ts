@@ -24,7 +24,7 @@ const productsSlice = createSlice({
     },
     reducers: {
         filterByPrice: (state, { payload }) => {
-            state.filtered = state.list.filter((item) => item.price < payload)
+            state.filtered = state.list.filter(({price}) => price < payload)
         },
     },
     extraReducers: (builder) => {
@@ -36,7 +36,7 @@ const productsSlice = createSlice({
             state.isLoading = false;
         }),
         builder.addCase(getProducts.rejected, (state) => {
-            state.isLoading = false;
+            // state.isLoading = false;
         })
     }
 })

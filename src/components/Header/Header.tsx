@@ -4,6 +4,8 @@ import { Container } from "../../styles/styles"
 import { Link } from "react-router-dom"
 import { ROUTES } from "../../utils/routes"
 import { HeartOutlined, ShoppingOutlined, LoginOutlined } from '@ant-design/icons'
+import { Badge } from "antd"
+import { useSelector } from "react-redux"
 
 
 const HeaderWrapper = styled.header`
@@ -25,7 +27,7 @@ const LogoContainer = styled.div`
 const Menu = styled.ul`
     list-style-type: none;
     display: flex;
-    gap: 20px;
+    gap: 30px;
     cursor: pointer;
     font-size: 16px;
     transition: ${props => props.theme.transition.fast};
@@ -63,9 +65,22 @@ const Menu = styled.ul`
         font-size: 20px;
         margin-left: 10px;
     }
+
+    .line:hover .icon {
+        color: ${props => props.theme.colors.blue};
+        transition: ${props => props.theme.transition.fast};
+    }
+    
+    .icon {
+        color: ${props => props.theme.colors.white};
+    }
+
 `
 
-export const Header = () => {
+export const Header = ({showFavorites, showCart}) => {
+
+    const { cart, favorites } = useSelector(({ user }) => user)
+
     return (
         <HeaderWrapper >
             <Container justify="space-between" align="center">
@@ -76,8 +91,16 @@ export const Header = () => {
                 </LogoContainer>
 
                 <Menu>
-                    <li className="line">Favorites<HeartOutlined className="icon" /></li>
-                    <li className="line">Cart<ShoppingOutlined className="icon"  /></li>
+                    <li className="line" onClick={showFavorites}>Favorites
+                        <Badge count={favorites.length} offset={[3, -2]} color="#007de1" size="small">
+                            <HeartOutlined className="icon" />
+                        </Badge>
+                    </li>
+                    <li className="line" onClick={showCart}>Cart
+                        <Badge count={cart.length} offset={[3, -2]} color="#007de1" size="small">
+                            <ShoppingOutlined className="icon"  />
+                        </Badge>
+                    </li>
                     <li className="line">Sign up<LoginOutlined className="icon"  /></li>
                 </Menu>
 

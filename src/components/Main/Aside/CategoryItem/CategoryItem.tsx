@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { toCapitalize } from "../../../../utils/toCapitalize"
 import  defaultImage  from '../../../../assets/pioneer-dj-logo.png'
+import { Badge } from "antd"
 
 const Li = styled.li`
     list-style-type: none;
@@ -9,14 +10,12 @@ const Li = styled.li`
     height: 80px;
     background-color: ${props => props.theme.colors.white};
     border-radius: ${props => props.theme.borderRadius.primary};
-    transform: ${props => props.theme.transition.fast};
-
+    transition: ${props => props.theme.transition.fast};
 
     .container {
         display: flex;
         align-items: center;
         height: 100%;
-        
     }
 
     .image {
@@ -63,10 +62,10 @@ const Li = styled.li`
     }
 `
 
-export const CategoryItem = ({ id = 0, title = 'Loading..', image = defaultImage }) => {
- 
+export const CategoryItem = ({ id = 0, title = 'Loading..', image = defaultImage, isActiveId }) => {
+        
     return (
-        <Li>
+        <Li style={{boxShadow: `${isActiveId == id ? '3px 3px 3px #007de1' : ''}`}}>
             <Link to={`/categories/${id}`} style={{textDecoration: 'none'}}>
                 <div className="container">
                     <img className="image" src={image} alt="{title}" />
@@ -76,3 +75,4 @@ export const CategoryItem = ({ id = 0, title = 'Loading..', image = defaultImage
         </Li>
     )
 }
+

@@ -30,10 +30,6 @@ export const ProductPage = () => {
         }
     }, [isLoading, isSuccess, isFetching])
 
-    console.log(id)
-    console.log(data)
-
-
     return (
         <ProductPageWrapper>
             <Container >
