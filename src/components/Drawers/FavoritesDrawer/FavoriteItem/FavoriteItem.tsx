@@ -1,4 +1,4 @@
-import { Button, Rate } from "antd";
+import { Button, Rate, message } from "antd";
 import styled from "styled-components"
 import { toCapitalize } from "../../../../utils/toCapitalize";
 import { ShoppingOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -40,6 +40,8 @@ const Item = styled.li`
 
 export const FavoriteItem = (favorite) => {
 
+    const [messageApi, contextHolder] = message.useMessage();
+
     const { 
         title,
         img,
@@ -51,10 +53,18 @@ export const FavoriteItem = (favorite) => {
 
     const { isSale } = features;
 
+    const successCart = (data) => {
+        messageApi.open({
+          type: 'success',
+          content: `${data.title} was added to Cart`,
+        });
+      };
+
     const dispatch = useDispatch()
 
     const addToCart = () => {
         dispatch(addProductToCart(favorite))
+        successCart(favorite)
     }
 
     const removeFromFavorites = () => {
@@ -63,6 +73,7 @@ export const FavoriteItem = (favorite) => {
 
     return (
         <Item>
+            {contextHolder}
             <div className="image">
                 <img src={img} alt={title}/>
             </div>

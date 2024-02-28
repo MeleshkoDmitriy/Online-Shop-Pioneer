@@ -43,25 +43,25 @@ const userSlice = createSlice({
         minusProductFromCart: (state, { payload }) => {
             let newCart = [...state.cart];
 
-            const productQuantity = state.cart.find((product) => {
+            const productObj = state.cart.find((product) => {
                 if(product.id === payload.id) {
-                    return product.quantity;
+                    return product;
                 }
             });
 
-            if (productQuantity > 1) {
-                console.log('productQuantity' ,productQuantity)
-
+            if (productObj.quantity > 1) {            
                 newCart = newCart.map((item) => {
-                    return { ...item, quantity: --item.quantity }
+                    if (item.id === payload.id) {
+                        return { ...item, quantity: item.quantity - 1 }
+                    } else {
+                        return item;
+                    }
                 })
             } else {
-                console.log('productQuantity', productQuantity)
                 newCart = newCart.filter((product) => product.id !== payload.id)
             }
-
-            state.cart = newCart;
-            console.log(state.cart)
+            
+            state.cart = newCart;            
         },
         removeProductFromCart: (state, { payload }) => {
             let newCart = [...state.cart];

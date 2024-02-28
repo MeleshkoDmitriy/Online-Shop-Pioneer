@@ -5,7 +5,8 @@ import { Link } from "react-router-dom"
 import { ROUTES } from "../../utils/routes"
 import { HeartOutlined, HeartFilled, ShoppingOutlined, ShoppingFilled, LoginOutlined } from '@ant-design/icons'
 import { Badge } from "antd"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { resetFilters } from "../../Redux/Slices/productsSlice"
 
 
 const HeaderWrapper = styled.header`
@@ -16,11 +17,25 @@ const HeaderWrapper = styled.header`
     position: sticky;
     top: 0;
     z-index: 10;
+    transition: ${props => props.theme.transition.fast};
+
 `
 
 const LogoContainer = styled.div`
+    transition: ${props => props.theme.transition.fast};
+    
+    &:hover { 
+        position: relative;
+        top: 2px;
+        img {
+            filter: drop-shadow(0px 0px 0px ${props => props.theme.colors.blue});
+        }
+    }
+
     img {
+        position: relative;
         width: 240px;
+        filter: drop-shadow(2px 2px 2px ${props => props.theme.colors.blue});
     }
 `
 
@@ -79,14 +94,14 @@ const Menu = styled.ul`
 
 export const Header = ({showFavorites, showCart}) => {
 
-    const { cart, favorites } = useSelector(({ user }) => user)
+    const { cart, favorites } = useSelector(({ user }) => user);
 
     return (
         <HeaderWrapper >
             <Container justify="space-between" align="center">
-                <LogoContainer >
+                <LogoContainer>
                     <Link to={ROUTES.HOME}>
-                        <img src={LOGO} alt="Logo" title="Pioneer Logo" />
+                        <img src={LOGO} alt="Logo" title="Home Page" />
                     </Link>
                 </LogoContainer>
 

@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { ProductItem } from "./ProductItem/ProductItem"
-import { useEffect } from "react"
-import { filterByPrice } from "../../../../Redux/Slices/productsSlice"
 
 
 const ListWrapper = styled.section`
@@ -20,16 +18,7 @@ export const ProductsList = () => {
 
     const dispatch = useDispatch()
 
-    const { products: { isLoading, list, filtered } } = useSelector((state) => state)
-    console.log(list)
-    console.log('f', filtered)
-
-
-    useEffect(() => {
-        if(!list.length) return;
-
-        dispatch(filterByPrice(1))
-    }, [dispatch, list.length])
+    const { products: { isLoading, list } } = useSelector((state) => state)
 
     return (
         <ListWrapper >
@@ -40,11 +29,5 @@ export const ProductsList = () => {
         </ListWrapper>
     )
 }
-
-
-/* 
-{filtered.map((filter) => {
-            return <ProductItem key={filter.id} {...filter} />
-                        })} */
 
             

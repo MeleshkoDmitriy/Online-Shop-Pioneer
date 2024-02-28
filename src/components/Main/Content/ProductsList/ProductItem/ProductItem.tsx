@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 import { HeartOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { toCapitalize } from "../../../../../utils/toCapitalize";
 import { Rate, Badge } from 'antd';
@@ -7,6 +7,7 @@ import { defineFeatureColor, defineFeatureString } from "../../../../../utils/de
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { addProductToCart, addProductToFavorites } from "../../../../../Redux/Slices/userSlice";
+import { useState } from "react";
 
 const Wrapper = styled.div`
     transition: ${props => props.theme.transition.fast};
@@ -15,7 +16,8 @@ const Wrapper = styled.div`
         transform: translateY(-7px);
     }
     .ant-card-hoverable:hover {
-    box-shadow: 7px 7px 5px ${props => props.theme.colors.blue}; // Измените цвет тени здесь
+        box-shadow: 7px 7px 5px ${props => props.theme.colors.blue};
+        /* box-shadow: 7px 7px 5px #0000ff; */
     }
 `
 
@@ -36,25 +38,50 @@ export const ProductItem = (product) => {
         features
     } = product;
 
+    const [messageApi, contextHolder] = message.useMessage();
+    const [ isLiked, setLiked] = useState(isFavorite);
+
     const { isSale } = features;
 
+    const favoriteContent = () => {
+        return isLiked  ? title + " was deleted from Favorites"
+                        : title + " was added to Favorites"
+    }
+
+    const successFavorite = () => {
+        messageApi.open({
+          type: 'success',
+          content: favoriteContent(),
+        });
+      };
+
+      const successCart = (data) => {
+          messageApi.open({
+            type: 'success',
+            content: `${data.title} was added to Cart`,
+          });
+        };
     
     const dispatch = useDispatch()
 
     const addToCart = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dispatch(addProductToCart(product))
+        dispatch(addProductToCart(product));
+        successCart(product);
     }
 
     const addToFavorites = (e) => {
+        setLiked(prev => !prev)
         e.preventDefault();
         e.stopPropagation();
-        dispatch(addProductToFavorites(product))
+        dispatch(addProductToFavorites(product));
+        successFavorite(product);
     }
 
     return (
         <Wrapper>
+            {contextHolder}
             <Link to={`/products/${id}`} style={{textDecoration: 'none'}}>
                 <Badge.Ribbon text={defineFeatureString(features)} color={defineFeatureColor(features)}>
                 <Card type="inner" title={title}
