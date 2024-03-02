@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { getCategories } from './Redux/Slices/categoriesSlice'
 import { getProducts } from './Redux/Slices/productsSlice'
 import { Drawer } from 'antd';
-import { HeartFilled, ShoppingFilled } from '@ant-design/icons';
 import { FavoritesDrawer } from './components/Drawers/FavoritesDrawer/FavoritesDrawer'
 import { CartDrawer } from './components/Drawers/CartDrawer/CartDrawer'
 

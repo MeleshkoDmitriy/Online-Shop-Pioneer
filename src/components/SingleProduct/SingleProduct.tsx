@@ -1,14 +1,15 @@
 import styled from "styled-components"
-import { Badge, Card, Collapse, Image, Rate, message } from 'antd';
+import { Badge, Card, Collapse, Divider, Image, Rate, message } from 'antd';
 import Typography from "antd/es/typography/Typography";
 import { toCapitalize } from "../../utils/toCapitalize";
-import { HeartOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled, ShoppingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
 import defaultImage from '../../assets/pioneer-dj-logo.png'
 import { addProductToCart, addProductToFavorites } from "../../Redux/Slices/userSlice";
 import { Link } from "react-router-dom";
 import { defineFeatureColor, defineFeatureString } from "../../utils/defineFeature";
 import { useEffect, useRef, useState } from "react";
+import { useUpdateFavoriteMutation } from "../../Redux/Slices/api/apiSlice";
 
 
 
@@ -70,6 +71,12 @@ const SingleProductWrapper = styled.section`
     }
 `
 
+const ActionsWrapper = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+`
+
 const { Paragraph } = Typography;
 const { Meta } = Card;
 
@@ -92,7 +99,6 @@ export const SingleProduct = (data) => {
         description,
         rating,
         isFavorite,
-        isCart,
         features
     } = data;
 
@@ -123,7 +129,9 @@ export const SingleProduct = (data) => {
           });
         };
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const [updateFavorite, { isLoading }] = useUpdateFavoriteMutation();
+
 
     const addToCart = () => {
         dispatch(addProductToCart(data))
@@ -132,6 +140,7 @@ export const SingleProduct = (data) => {
 
     const addToFavorites = () => {
         setLiked(prev => !prev)
+        updateFavorite({ id, isFavorite }).unwrap();
         dispatch(addProductToFavorites(data))
         successFavorite(data)
     }
@@ -176,14 +185,21 @@ export const SingleProduct = (data) => {
                                         hoverable
                                         style={{width: 300 }}
                                         actions={[
-                                                    <HeartOutlined  onClick={addToFavorites}
-                                                                    style={{fontSize: '20px'}} 
-                                                                    title="Add to Favorites" 
-                                                                    key="isFavorite" />,
-                                                    <ShoppingOutlined   onClick={addToCart} 
-                                                                        title="Add to Cart" 
-                                                                        style={{fontSize: '20px'}} 
-                                                                        key="isCart"/>
+                                            <ActionsWrapper>
+                                                    {isLiked ? <HeartFilled     onClick={addToFavorites}
+                                                                                style={{fontSize: '20px', color: "#007de1"}}
+                                                                                title="Add to Favorites" 
+                                                                                key="isFavorite"/> 
+                                                             : <HeartOutlined   onClick={addToFavorites}
+                                                                                style={{fontSize: '20px'}}
+                                                                                title="Add to Favorites" 
+                                                                                key="isFavorite"/> }
+                                                    <ShoppingOutlined   
+                                                        onClick={addToCart} 
+                                                        title="Add to Cart" 
+                                                        style={{fontSize: '20px', color: "#007de1"}} 
+                                                        key="isCart"/>
+                                            </ActionsWrapper>
                                         ]}>
                                         <div className="cardInfo">
                                             <div className="info">

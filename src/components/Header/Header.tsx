@@ -23,10 +23,13 @@ const HeaderWrapper = styled.header`
 
 const LogoContainer = styled.div`
     transition: ${props => props.theme.transition.fast};
+    position: relative;
+    top: 0px;
     
     &:hover { 
         position: relative;
         top: 2px;
+
         img {
             filter: drop-shadow(0px 0px 0px ${props => props.theme.colors.blue});
         }
@@ -36,6 +39,8 @@ const LogoContainer = styled.div`
         position: relative;
         width: 240px;
         filter: drop-shadow(2px 2px 2px ${props => props.theme.colors.blue});
+        transition: ${props => props.theme.transition.fast};
+
     }
 `
 
@@ -81,13 +86,19 @@ const Menu = styled.ul`
         margin-left: 10px;
     }
 
-    .line:hover .icon {
+    .line:hover .icon, #git:hover {
         color: ${props => props.theme.colors.blue};
         transition: ${props => props.theme.transition.fast};
     }
     
     .icon {
         color: ${props => props.theme.colors.white};
+    }
+
+    #git {
+        color: ${props => props.theme.colors.white};
+        text-decoration: none;
+        transition: ${props => props.theme.transition.fast};
     }
 
 `
@@ -118,7 +129,11 @@ export const Header = ({showFavorites, showCart}) => {
                                             : <ShoppingOutlined className="icon" />}
                         </Badge>
                     </li>
-                    <li className="line">Sign up<LoginOutlined className="icon"  /></li>
+                    <li className="line">
+                        <a id="git" href="https://github.com/MeleshkoDmitriy/Online-Shop-Pioneer" target="blank">
+                            Sign up
+                        </a><LoginOutlined className="icon"  />
+                    </li>
                 </Menu>
 
             </Container>

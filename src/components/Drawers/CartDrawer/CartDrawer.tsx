@@ -2,6 +2,10 @@ import { Button, message } from "antd"
 import styled from "styled-components"
 import { CartItem } from "./CartItem/CartItem"
 import { CheckOutlined } from '@ant-design/icons'
+import { useSendOrderMutation } from "../../../Redux/Slices/api/apiSlice"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { cleanUpCart } from "../../../Redux/Slices/userSlice"
 
 
 
@@ -50,25 +54,39 @@ const FooterSection = styled.div`
 export const CartDrawer = ({cart}) => {
 
     const [messageApi, contextHolder] = message.useMessage();
+    const [sendOrder, { isLoading: isLoadingSendOrder }] = useSendOrderMutation();
+    const dispatch = useDispatch();
 
     const totalPrice = cart.reduce((sum, product) => {
         return sum + (product.price * product.quantity)
     }, 0)
 
-    const infoMessage = () => {
-        messageApi.open({
-          type: 'loading',
-          content: 'Your order is processiding...',
-          duration: 1,
-        });
-        setTimeout(() => {
-          messageApi.open({
-            type: 'success',
-            content: 'Your order is accepted!',
-            duration: 2,
+    const makeOrder = () => {
+        sendOrder(cart).unwrap()
+        .then(() => {
+            messageApi.open({
+                type: 'loading',
+                content: 'Your order is processiding...',
+                duration: 1,
+              });
+              setTimeout(() => {
+                messageApi.open({
+                  type: 'success',
+                  content: 'Your order is accepted!',
+                  duration: 2,
+                });
+                dispatch(cleanUpCart());
+              }, 1100)
+        })
+        .catch(error => {
+            messageApi.open({
+              type: 'error',
+              content: error.message,
+              duration: 2
+            });
           });
-        }, 1100);
       };
+      
 
     return (
         <Wrapper>
@@ -79,7 +97,7 @@ export const CartDrawer = ({cart}) => {
                 })}
                 {cart.length    ?   <FooterSection>
                                         <div className="total"><strong>Total price: {totalPrice}</strong> BYN</div>
-                                        <Button onClick={infoMessage}
+                                        <Button onClick={makeOrder}
                                                 className="order" type="primary">Make order<CheckOutlined /></Button>
                                     </FooterSection>
                                 : ''}

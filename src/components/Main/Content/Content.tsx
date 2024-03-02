@@ -21,8 +21,3 @@ export const Content = () => {
         </ContentWrapper>
     )
 }
-
-// {isLoading   ? <h2>Loading..</h2>
-// : list.map((list) => {
-//     return <div>{list.title}{list.category}{list.price}</div>
-// } )}

@@ -4,6 +4,7 @@ import { toCapitalize } from "../../../../utils/toCapitalize";
 import { DeleteOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
 import { addProductToCart, minusProductFromCart, removeProductFromCart } from "../../../../Redux/Slices/userSlice";
+import { useDeleteFromCartMutation } from "../../../../Redux/Slices/api/apiSlice";
 
 
 
@@ -51,17 +52,20 @@ const Item = styled.li`
 export const CartItem = (cart) => {
 
     const { 
+        id,
         title,
         img,
         category,
         price,
         features,
+        isCart,
         quantity
     } = cart;
 
     const { isSale } = features;
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
 
     const addToCart = () => {
         dispatch(addProductToCart(cart))
@@ -72,7 +76,7 @@ export const CartItem = (cart) => {
     }
 
     const removeFromCart = () => {
-        dispatch(removeProductFromCart(cart))
+        dispatch(removeProductFromCart(cart));
     }
 
 

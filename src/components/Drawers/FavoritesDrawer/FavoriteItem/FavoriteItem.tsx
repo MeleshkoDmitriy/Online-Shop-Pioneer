@@ -4,6 +4,7 @@ import { toCapitalize } from "../../../../utils/toCapitalize";
 import { ShoppingOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
 import { addProductToCart, addProductToFavorites } from "../../../../Redux/Slices/userSlice";
+import { useUpdateFavoriteMutation } from "../../../../Redux/Slices/api/apiSlice";
 
 
 
@@ -41,14 +42,17 @@ const Item = styled.li`
 export const FavoriteItem = (favorite) => {
 
     const [messageApi, contextHolder] = message.useMessage();
+    const [updateFavorite, { isLoading: isLoadingFavorite }] = useUpdateFavoriteMutation();
 
     const { 
+        id,
         title,
         img,
         category,
         price,
         rating,
-        features
+        features,
+        isFavorite,
     } = favorite;
 
     const { isSale } = features;
@@ -68,7 +72,8 @@ export const FavoriteItem = (favorite) => {
     }
 
     const removeFromFavorites = () => {
-        dispatch(addProductToFavorites(favorite))
+        dispatch(addProductToFavorites(favorite));
+        updateFavorite({ id, isFavorite }).unwrap();
     }
 
     return (

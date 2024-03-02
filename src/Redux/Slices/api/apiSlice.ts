@@ -11,8 +11,22 @@ export const apiSlice = createApi({
         getProduct: builder.query({
             query:({ id }) => `/products/${id}`,
             providesTags: ['Product']
+        }),
+        updateFavorite: builder.mutation({
+            query:({ id, isFavorite }) => ({
+                url:  `/products/${id}`,
+                method: "PATCH",
+                body: { isFavorite: !isFavorite }
+            })
+        }),
+        sendOrder: builder.mutation({
+            query: order => ({
+                url:  '/orders/',
+                method: "POST",
+                body: order
+            })
         })
     })
 })
 
-export const { useGetProductQuery } = apiSlice;
+export const { useGetProductQuery, useUpdateFavoriteMutation, useSendOrderMutation } = apiSlice;
