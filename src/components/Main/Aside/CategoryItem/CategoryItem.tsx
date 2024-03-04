@@ -2,9 +2,10 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { toCapitalize } from "../../../../utils/toCapitalize"
 import  defaultImage  from '../../../../assets/pioneer-dj-logo.png'
-import { Badge } from "antd"
+import { Badge, Skeleton } from "antd"
 import { useDispatch } from "react-redux"
 import { resetFilters } from "../../../../Redux/Slices/productsSlice"
+
 
 const Li = styled.li`
     list-style-type: none;
@@ -74,15 +75,15 @@ export const CategoryItem = ({ id = 0, title = 'Loading..', image = defaultImage
 
         
     return (
-        <Li onClick={reset} style={{boxShadow: `${isActiveId == id ? '3px 3px 3px #007de1' : ''}`}}>
-            <Link to={`/categories/${id}`} style={{textDecoration: 'none'}}>
-                <div className="container">
-                    <img className="image" src={image} alt="{title}" />
-                    <span className="line" style={{color: `${isActiveId == id ? '#007de1' : ''}`}}>
-                        {toCapitalize(title)}
-                    </span>
-                </div>
-            </Link>
+        <Li onClick={reset} style={{boxShadow: `${isActiveId == id ? '3px 3px 3px #007ce190' : ''}`}}>
+                <Link to={`/categories/${id}`} style={{textDecoration: 'none'}}>
+                    <div className="container">
+                        <img className="image" src={image} alt="{title}" />
+                        <span className="line" style={{color: `${isActiveId == id ? '#007de1' : ''}`}}>
+                            {toCapitalize(title)}
+                        </span>
+                    </div>
+                </Link>
         </Li>
     )
 }

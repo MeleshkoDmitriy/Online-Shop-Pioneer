@@ -18,6 +18,7 @@ const HeaderWrapper = styled.header`
     top: 0;
     z-index: 10;
     transition: ${props => props.theme.transition.fast};
+    transition-timing-function: ease-in-out;
 
 `
 

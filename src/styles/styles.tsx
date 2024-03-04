@@ -5,6 +5,7 @@ declare module "styled-components" {
     colors: {
       black: string;
       blue: string;
+      blueOpacity: string;
       gray: string;
       darkGray: string;
       lightGray: string;
@@ -33,6 +34,7 @@ const theme = {
   colors: {
     black: "#222222",
     blue: "#007de1",
+    blueOpacity: "#007ce1b2",
     gray: '#9a9a9a',
     darkGray: "#262626",
     lightGray: "#f7f7f7",

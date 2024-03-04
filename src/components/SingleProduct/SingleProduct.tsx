@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Badge, Card, Collapse, Divider, Image, Rate, message } from 'antd';
+import { Badge, Card, Collapse, Divider, Image, Rate, Skeleton, message } from 'antd';
 import Typography from "antd/es/typography/Typography";
 import { toCapitalize } from "../../utils/toCapitalize";
 import { HeartOutlined, HeartFilled, ShoppingOutlined } from '@ant-design/icons';
@@ -173,34 +173,37 @@ export const SingleProduct = (data) => {
             {contextHolder}
             <div className="main">
                 <div className="imageBlock">
-                        <Image
-                            style={{filter: 'drop-shadow(5px 5px 5px gray)'}}
-                            width={400}
-                            src={img}
-                        />
+                        {data   ?  <Image
+                                        style={{filter: 'drop-shadow(5px 5px 5px gray)'}}
+                                        width={400}
+                                        src={img}
+                                    />
+                                :   <Skeleton.Image active={!data} style={{width: "400px"}}/>
+                        }
+
                 </div>
                 <Badge.Ribbon  text={textRef.current} color={colorRef.current}>
                                 <Card   title={title} 
                                         className="card"
                                         hoverable
                                         style={{width: 300 }}
-                                        actions={[
-                                            <ActionsWrapper>
-                                                    {isLiked ? <HeartFilled     onClick={addToFavorites}
-                                                                                style={{fontSize: '20px', color: "#007de1"}}
-                                                                                title="Add to Favorites" 
-                                                                                key="isFavorite"/> 
-                                                             : <HeartOutlined   onClick={addToFavorites}
-                                                                                style={{fontSize: '20px'}}
-                                                                                title="Add to Favorites" 
-                                                                                key="isFavorite"/> }
-                                                    <ShoppingOutlined   
-                                                        onClick={addToCart} 
-                                                        title="Add to Cart" 
-                                                        style={{fontSize: '20px', color: "#007de1"}} 
-                                                        key="isCart"/>
-                                            </ActionsWrapper>
-                                        ]}>
+                                            actions={[
+                                                <ActionsWrapper>
+                                                        {isLiked ? <HeartFilled     onClick={addToFavorites}
+                                                                                    style={{fontSize: '20px', color: "#007de1"}}
+                                                                                    title="Add to Favorites" 
+                                                                                    key="isFavorite"/> 
+                                                                : <HeartOutlined   onClick={addToFavorites}
+                                                                                    style={{fontSize: '20px'}}
+                                                                                    title="Add to Favorites" 
+                                                                                    key="isFavorite"/> }
+                                                        <ShoppingOutlined   
+                                                            onClick={addToCart} 
+                                                            title="Add to Cart" 
+                                                            style={{fontSize: '20px', color: "#007de1"}} 
+                                                            key="isCart"/>
+                                                </ActionsWrapper>
+                                            ]}>
                                         <div className="cardInfo">
                                             <div className="info">
                                                 <p style={{fontSize: '20px', margin: '0px'}}>{price} BYN {features?.isSale && <span style={{textDecoration: 'line-through', color: 'gray', marginLeft: '10px', fontSize:'14px'}}>

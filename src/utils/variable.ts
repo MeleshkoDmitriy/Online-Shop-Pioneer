@@ -1,0 +1,1 @@
+export const loadingArray: string[] = new Array(10).fill("Loading...");

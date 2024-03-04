@@ -14,10 +14,10 @@ const Wrapper = styled.div`
     transition: ${props => props.theme.transition.fast};
 
     &:hover {
-        transform: translateY(-7px);
+        transform: translateY(-3px);
     }
     .ant-card-hoverable:hover {
-        box-shadow: 7px 7px 5px ${props => props.theme.colors.blue};
+        box-shadow: 7px 7px 5px ${props => props.theme.colors.lightGray};
         /* box-shadow: 7px 7px 5px #0000ff; */
     }
 `

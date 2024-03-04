@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import { useSelector } from "react-redux"
 import { CategoryItem } from "./CategoryItem/CategoryItem"
-import { useEffect } from "react"
+import { Skeleton } from "antd"
+import { loadingArray } from "../../../utils/variable"
+
 
 const AsideWrapper = styled.aside`
     width: 200px;
@@ -51,21 +53,38 @@ const AsideWrapper = styled.aside`
     }
 `
 
+const SkeletonCategory = styled.div`
+        width: 200px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+`
+
 
 
 export const Aside = ({isActiveId}) => {
 
     
 
-    const { list, isLoading } = useSelector(({ categories }) => categories);
+    const { list, isLoading: isLoadingCategories } = useSelector(({ categories }) => categories);
 
 
     return (
         <AsideWrapper>
             <nav>
                 <ul>
-                    { isLoading ? <div>Loading..</div> :  list?.map((category) => {
-                                                            return <CategoryItem key={category.id} isActiveId={isActiveId} {...category} />})}
+                    { isLoadingCategories ? loadingArray.map((_, i) => {
+                                                return (
+                                                    <SkeletonCategory key={i}>
+                                                            <Skeleton.Button    active={isLoadingCategories}
+                                                                                shape="round"
+                                                                                style={{width: "200px", height: "80px"}} />
+                                                    </SkeletonCategory>
+                                                )})
+                                          :  list?.map((category) => {
+                                                return <CategoryItem    key={category.id} 
+                                                                        isActiveId={isActiveId} 
+                                                                        {...category} />})}
                 </ul>
             </nav>
         </AsideWrapper>

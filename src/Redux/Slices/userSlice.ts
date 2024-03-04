@@ -103,7 +103,6 @@ const userSlice = createSlice({
         }),
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.favorites = action.payload.filter((product) => product.isFavorite === true);
-            // state.cart = action.payload.filter((product) => product.isCart === true);
             state.isLoading = false;
         }),
         builder.addCase(getProducts.rejected, (state) => {

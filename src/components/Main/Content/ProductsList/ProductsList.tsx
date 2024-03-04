@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { ProductItem } from "./ProductItem/ProductItem"
+import { Skeleton } from "antd"
+import { loadingArray } from "../../../../utils/variable"
 
 
 const ListWrapper = styled.section`
@@ -14,16 +16,27 @@ const ListWrapper = styled.section`
     /* @media */
 `
 
+const SkeletonProduct = styled.div`
+    width: 300px;
+    height: 450px;
+`
+
 export const ProductsList = () => {
 
-    const dispatch = useDispatch()
-
-    const { products: { isLoading, list } } = useSelector((state) => state)
+    const { products: { isLoading, list } } = useSelector((state) => state);
 
     return (
         <ListWrapper >
-            {isLoading && <div>Loading...</div>}
-            {list.map((item) => {
+            {isLoading  ? loadingArray.map((_, i) => {
+                            return (
+                                    <SkeletonProduct key={i}>
+                                            <Skeleton.Button    active={isLoading}
+                                                                shape="round"
+                                                                style={{width: "300px", height: "450px"}}/>
+                                    </SkeletonProduct>
+                            )
+            })
+                        : list?.map((item) => {
                 return <ProductItem key={item.id} {...item} />
             })}
         </ListWrapper>

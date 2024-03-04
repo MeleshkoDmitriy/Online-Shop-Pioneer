@@ -5,6 +5,8 @@ import { Container } from "../../styles/styles";
 import { Aside } from "../../components/Main/Aside/Aside";
 import styled from "styled-components";
 import { ProductItem } from "../../components/Main/Content/ProductsList/ProductItem/ProductItem";
+import { Skeleton } from "antd";
+import { loadingArray } from "../../utils/variable";
 
 const CategoryPageWrapper = styled.div`
     min-height: 100%;
@@ -22,24 +24,34 @@ const CategoryListWrapper = styled.div`
     gap: ${props => props.theme.padding.primary};
 `
 
+const SkeletonCategory = styled.div`
+    width: 300px;
+    height: 450px;
+`
+
 export const CategoryPage = () => {
 
     
     const { id } = useParams();
 
-    const { list } = useSelector(({ products }) => products)
-
+    const { list, isLoading } = useSelector(({ products }) => products)
 
     const categoryList = list.filter((product) => product.categoryId == id)
-
-    console.log(categoryList)
 
     return (
         <CategoryPageWrapper>
             <Container>
                 <Aside isActiveId={id} />
                 <CategoryListWrapper>
-                    {categoryList?.map((elem) => {
+                    {isLoading  ?   loadingArray.slice(0, 3).map((_, i) => {
+                                        return (
+                                            <SkeletonCategory key={i}>
+                                                <Skeleton.Button    active={isLoading}
+                                                                    shape="round"
+                                                                    style={{width: "300px", height: "450px"}}/>
+                                            </SkeletonCategory>
+                                        )})
+                                : categoryList?.map((elem) => {
                         return <ProductItem key={elem.id} {...elem} />
                     })}
                 </CategoryListWrapper>
