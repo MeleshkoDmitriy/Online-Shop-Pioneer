@@ -5,6 +5,7 @@ import { ShoppingOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
 import { addProductToCart, addProductToFavorites } from "../../../../Redux/Slices/userSlice";
 import { useUpdateFavoriteMutation } from "../../../../Redux/Slices/api/apiSlice";
+import { useAppDispatch } from "../../../../hooks/hook";
 
 
 
@@ -41,8 +42,8 @@ const Item = styled.li`
 
 export const FavoriteItem = (favorite) => {
 
-    const [messageApi, contextHolder] = message.useMessage();
-    const [updateFavorite, { isLoading: isLoadingFavorite }] = useUpdateFavoriteMutation();
+    const [ messageApi, contextHolder ] = message.useMessage();
+    const [ updateFavorite ] = useUpdateFavoriteMutation();
 
     const { 
         id,
@@ -64,7 +65,7 @@ export const FavoriteItem = (favorite) => {
         });
       };
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch();
 
     const addToCart = () => {
         dispatch(addProductToCart(favorite))

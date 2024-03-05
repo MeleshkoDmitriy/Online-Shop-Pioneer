@@ -11,9 +11,6 @@ const ContentWrapper = styled.section`
 `
 
 export const Content = () => {
-
-
-
     return (
         <ContentWrapper>
             <FilterBar />

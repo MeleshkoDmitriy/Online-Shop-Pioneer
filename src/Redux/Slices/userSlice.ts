@@ -1,26 +1,34 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { PRODUCTS_URL } from "../../utils/services/services.api"
+import { TCartProduct, TProduct } from "../../types/types"
 
-export const getProducts = createAsyncThunk('products/getProducts',
+export const getProducts = createAsyncThunk<TProduct[], undefined>('products/getProducts',
     async (_, thunkApi) => {
         try {
-            const res = await axios.get(`${PRODUCTS_URL}`)
+            const res = await axios.get(`${PRODUCTS_URL}`);
             return res.data;
         } catch (error) {
-            console.log(error);
             return thunkApi.rejectWithValue(error);
         }
     }
 )
 
+interface IInitialState {
+    cart: TCartProduct[],
+    favorites: TProduct[],
+    isLoading: boolean,
+}
+
+const initialState: IInitialState =  {
+    cart: [],
+    favorites: [],
+    isLoading: false,
+}
+
 const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        cart: [],
-        favorites: [],
-        isLoading: false,
-    },
+    initialState,
     reducers: {
         addProductToCart: (state, { payload }) => {
             let newCart = [...state.cart];
@@ -49,7 +57,7 @@ const userSlice = createSlice({
                 }
             });
 
-            if (productObj.quantity > 1) {            
+            if (productObj && productObj.quantity > 1) {            
                 newCart = newCart.map((item) => {
                     if (item.id === payload.id) {
                         return { ...item, quantity: item.quantity - 1 }
@@ -98,14 +106,15 @@ const userSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder.addCase(getProducts.pending, (state) => {
+        builder.
+            addCase(getProducts.pending, (state) => {
             state.isLoading = true;
-        }),
-        builder.addCase(getProducts.fulfilled, (state, action) => {
-            state.favorites = action.payload.filter((product) => product.isFavorite === true);
+        })
+            .addCase(getProducts.fulfilled, (state, action: PayloadAction<TProduct[]>) => {
+            state.favorites = action.payload.filter((product: TProduct) => product.isFavorite === true);
             state.isLoading = false;
-        }),
-        builder.addCase(getProducts.rejected, (state) => {
+        })
+            .addCase(getProducts.rejected, (state) => {
             state.isLoading = false;
         })
     }

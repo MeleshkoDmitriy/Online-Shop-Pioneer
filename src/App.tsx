@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import { AppRoutes } from './components/Routes/Routes'
 import { Header } from './components/Header/Header'
 import { Footer } from './components/Footer/Footer'
-import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getCategories } from './Redux/Slices/categoriesSlice'
 import { getProducts } from './Redux/Slices/productsSlice'
 import { Drawer } from 'antd';
 import { FavoritesDrawer } from './components/Drawers/FavoritesDrawer/FavoritesDrawer'
 import { CartDrawer } from './components/Drawers/CartDrawer/CartDrawer'
+import { useAppDispatch, useAppSelector } from './hooks/hook'
 
 
 const Wrapper = styled.div`
@@ -20,14 +20,14 @@ const Wrapper = styled.div`
 
 function App() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getCategories())
-    dispatch(getProducts())
+    dispatch(getCategories());
+    dispatch(getProducts());
   }, [dispatch])
 
-  const { favorites, cart } = useSelector(({ user }) => user)
+  const { favorites, cart } = useAppSelector((state) => state.user)
 
   const [ openFavorites, setOpenFavorites] = useState(false);
   const showFavorites = () => {
@@ -50,7 +50,6 @@ function App() {
 
   const cartTitle = cart.length   ? `Cart: You have ${cart.length} product(s) in the cart`
                                             : "Cart: No products in the cart yet";
-
   return (
     <Wrapper >
       <Header showFavorites={showFavorites} showCart={showCart} />

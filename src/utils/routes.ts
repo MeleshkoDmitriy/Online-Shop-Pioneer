@@ -1,7 +1,11 @@
-export const ROUTES = {
+type RoutesProps = {
+    HOME: string,
+    CATEGORY: string,
+    PRODUCT: string
+}
+
+export const ROUTES: RoutesProps = {
     HOME: '/',
-    FAVORITES: '/favorites',
-    CART: '/cart',
     CATEGORY: '/categories/:id',
     PRODUCT: '/products/:id'
 }

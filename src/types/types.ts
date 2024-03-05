@@ -18,3 +18,12 @@ export type TProduct = {
     features: TFeatures
   }
   
+export type TCategory = {
+  id: number
+  title: string
+  image: string
+}
+
+export type TCartProduct = {
+  quantity: number;
+} & TProduct;

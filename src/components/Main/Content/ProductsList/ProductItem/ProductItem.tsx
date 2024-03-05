@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-import { Button, Card, message } from 'antd';
+import { Card, message } from 'antd';
 import { HeartOutlined, ShoppingOutlined, HeartFilled } from '@ant-design/icons';
 import { toCapitalize } from "../../../../../utils/toCapitalize";
 import { Rate, Badge } from 'antd';
 import { defineFeatureColor, defineFeatureString } from "../../../../../utils/defineFeature";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import { addProductToCart, addProductToFavorites } from "../../../../../Redux/Slices/userSlice";
-import { useState } from "react";
-import { useUpdateCartMutation, useUpdateFavoriteMutation } from "../../../../../Redux/Slices/api/apiSlice";
+import { useEffect, useState } from "react";
+import { useUpdateFavoriteMutation } from "../../../../../Redux/Slices/api/apiSlice";
+import { TProduct } from "../../../../../types/types";
+import { useAppDispatch } from "../../../../../hooks/hook";
 
 const Wrapper = styled.div`
     transition: ${props => props.theme.transition.fast};
@@ -29,7 +30,7 @@ const ActionsWrapper = styled.div`
 
 const { Meta } = Card;
 
-export const ProductItem = (product) => {
+export const ProductItem = (product: TProduct) => {
 
     const { 
         id, 
@@ -44,6 +45,15 @@ export const ProductItem = (product) => {
 
     const [messageApi, contextHolder] = message.useMessage();
     const [ isLiked, setLiked] = useState(isFavorite);
+
+    useEffect(() => {
+        if(!product) return;
+
+        setLiked(isFavorite);
+    }, [isFavorite])
+
+    // console.log(product)
+
 
     const { isSale } = features;
 
@@ -66,8 +76,8 @@ export const ProductItem = (product) => {
           });
         };
     
-    const dispatch = useDispatch();
-    const [updateFavorite, { isLoading: isLoadingFavorite }] = useUpdateFavoriteMutation();
+    const dispatch = useAppDispatch();
+    const [ updateFavorite ] = useUpdateFavoriteMutation();
 
     
     const addToCart = (e) => {
@@ -82,10 +92,10 @@ export const ProductItem = (product) => {
         e.preventDefault();
         e.stopPropagation();
 
+        setLiked(prev => !prev);
         updateFavorite({ id, isFavorite }).unwrap();
         dispatch(addProductToFavorites(product));
-        setLiked(prev => !prev);
-        successFavorite(product);
+        successFavorite();
     }
 
     return (

@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, keyframes, ThemeProvider } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
@@ -89,10 +89,6 @@ export const Container = styled.div<ContainerProps>`
     margin-inline: 10px;
   }
 `
-
-// export const underlineAnimation = keyframes`
-// `
-
 
 export const Theme = ({ children }: { children: React.ReactNode }) => {
   return (

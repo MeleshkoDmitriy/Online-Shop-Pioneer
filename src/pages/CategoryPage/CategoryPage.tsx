@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { Container } from "../../styles/styles";
 import { Aside } from "../../components/Main/Aside/Aside";
@@ -7,6 +5,8 @@ import styled from "styled-components";
 import { ProductItem } from "../../components/Main/Content/ProductsList/ProductItem/ProductItem";
 import { Skeleton } from "antd";
 import { loadingArray } from "../../utils/variable";
+import { useAppSelector } from "../../hooks/hook";
+import { TProduct } from "../../types/types";
 
 const CategoryPageWrapper = styled.div`
     min-height: 100%;
@@ -34,7 +34,7 @@ export const CategoryPage = () => {
     
     const { id } = useParams();
 
-    const { list, isLoading } = useSelector(({ products }) => products)
+    const { list, isLoading } = useAppSelector((state) => state.products)
 
     const categoryList = list.filter((product) => product.categoryId == id)
 

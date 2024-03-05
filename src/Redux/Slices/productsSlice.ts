@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { PRODUCTS_URL } from "../../utils/services/services.api"
+import { TProduct } from "../../types/types"
 
 export const getProducts = createAsyncThunk('products/getProducts',
     async (_, thunkApi) => {
@@ -14,14 +15,23 @@ export const getProducts = createAsyncThunk('products/getProducts',
     }
 )
 
+interface IInitialState {
+    initialList: TProduct[],
+    list: TProduct[],
+    isLoading: boolean,
+    defaultsSelect: string[],
+}
+
+const initialState: IInitialState = {
+    initialList: [],
+    list: [],
+    isLoading: false,
+    defaultsSelect: ['all products', 'default order'],
+}
+
 const productsSlice = createSlice({
     name: 'products',
-    initialState: {
-        initialList: [],
-        list: [],
-        isLoading: false,
-        defaultsSelect: ['all products', 'default order'],
-    },
+    initialState,
     reducers: {
         resetFilters: (state) => {
             state.list = state.initialList;
@@ -56,22 +66,25 @@ const productsSlice = createSlice({
                     return a.price - b.price;
                 } else if (payload === 'from expensive to ship') {
                     return b.price - a.price;
+                } else {
+                    return 0;
                 }
             })
             state.list = listCopy;
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(getProducts.pending, (state) => {
+        builder
+            .addCase(getProducts.pending, (state) => {
             state.isLoading = true;
-        }),
-        builder.addCase(getProducts.fulfilled, (state, action) => {
+        })
+            .addCase(getProducts.fulfilled, (state, action: PayloadAction<TProduct[]>) => {
             state.initialList = action.payload;
             state.list = action.payload;
             state.isLoading = false;
-        }),
-        builder.addCase(getProducts.rejected, (state) => {
-            // state.isLoading = false;
+        })
+            .addCase(getProducts.rejected, (state) => {
+            state.isLoading = false;
         })
     }
 })

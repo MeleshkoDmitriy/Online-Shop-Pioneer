@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { ProductItem } from "./ProductItem/ProductItem"
 import { Skeleton } from "antd"
 import { loadingArray } from "../../../../utils/variable"
+import { useAppSelector } from "../../../../hooks/hook"
 
 
 const ListWrapper = styled.section`
@@ -13,7 +13,6 @@ const ListWrapper = styled.section`
     align-items: center;
     flex-wrap: wrap;
     gap: ${props => props.theme.padding.primary}
-    /* @media */
 `
 
 const SkeletonProduct = styled.div`
@@ -23,7 +22,7 @@ const SkeletonProduct = styled.div`
 
 export const ProductsList = () => {
 
-    const { products: { isLoading, list } } = useSelector((state) => state);
+    const { products: { isLoading, list } } = useAppSelector((state) => state);
 
     return (
         <ListWrapper >

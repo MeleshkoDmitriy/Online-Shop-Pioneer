@@ -5,6 +5,8 @@ import { DeleteOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
 import { addProductToCart, minusProductFromCart, removeProductFromCart } from "../../../../Redux/Slices/userSlice";
 import { useDeleteFromCartMutation } from "../../../../Redux/Slices/api/apiSlice";
+import { TCartProduct } from "../../../../types/types";
+import { useAppDispatch } from "../../../../hooks/hook";
 
 
 
@@ -49,7 +51,7 @@ const Item = styled.li`
     }
 `
 
-export const CartItem = (cart) => {
+export const CartItem = (cart: TCartProduct) => {
 
     const { 
         id,
@@ -64,7 +66,7 @@ export const CartItem = (cart) => {
 
     const { isSale } = features;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
 
     const addToCart = () => {
