@@ -2,10 +2,11 @@ import { Button, Rate, message } from "antd";
 import styled from "styled-components"
 import { toCapitalize } from "../../../../utils/toCapitalize";
 import { ShoppingOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useDispatch } from "react-redux";
 import { addProductToCart, addProductToFavorites } from "../../../../Redux/Slices/userSlice";
 import { useUpdateFavoriteMutation } from "../../../../Redux/Slices/api/apiSlice";
 import { useAppDispatch } from "../../../../hooks/hook";
+import { TProduct } from "../../../../types/types";
+import { FC } from "react";
 
 
 
@@ -40,7 +41,7 @@ const Item = styled.li`
     }
 `
 
-export const FavoriteItem = (favorite) => {
+export const FavoriteItem:FC<TProduct> = (favorite: TProduct) => {
 
     const [ messageApi, contextHolder ] = message.useMessage();
     const [ updateFavorite ] = useUpdateFavoriteMutation();
@@ -58,7 +59,7 @@ export const FavoriteItem = (favorite) => {
 
     const { isSale } = features;
 
-    const successCart = (data) => {
+    const successCart = (data: TProduct) => {
         messageApi.open({
           type: 'success',
           content: `${data.title} was added to Cart`,
@@ -68,8 +69,8 @@ export const FavoriteItem = (favorite) => {
     const dispatch = useAppDispatch();
 
     const addToCart = () => {
-        dispatch(addProductToCart(favorite))
-        successCart(favorite)
+        dispatch(addProductToCart(favorite));
+        successCart(favorite);
     }
 
     const removeFromFavorites = () => {

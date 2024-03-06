@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import { useSelector } from "react-redux"
 import { CategoryItem } from "./CategoryItem/CategoryItem"
 import { Skeleton } from "antd"
 import { loadingArray } from "../../../utils/variable"
-
+import { FC } from "react"
+import { useAppSelector } from "../../../hooks/hook"
 
 const AsideWrapper = styled.aside`
     width: 200px;
@@ -60,14 +60,13 @@ const SkeletonCategory = styled.div`
         align-items: center;
 `
 
+interface AsideProps {
+    isActiveId?: string
+}
 
+export const Aside:FC<AsideProps> = ({isActiveId}) => {
 
-export const Aside = ({isActiveId}) => {
-
-    
-
-    const { list, isLoading: isLoadingCategories } = useSelector(({ categories }) => categories);
-
+    const { list, isLoading: isLoadingCategories } = useAppSelector(( state ) => state.categories);
 
     return (
         <AsideWrapper>

@@ -2,9 +2,9 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { toCapitalize } from "../../../../utils/toCapitalize"
 import  defaultImage  from '../../../../assets/pioneer-dj-logo.png'
-import { Badge, Skeleton } from "antd"
-import { useDispatch } from "react-redux"
 import { resetFilters } from "../../../../Redux/Slices/productsSlice"
+import { FC } from "react"
+import { useAppDispatch } from "../../../../hooks/hook"
 
 
 const Li = styled.li`
@@ -64,15 +64,20 @@ const Li = styled.li`
         }
     }
 `
+interface CategoryItemProps {
+    id: number;
+    title: string;
+    image: string;
+    isActiveId?: string | number
+}
 
-export const CategoryItem = ({ id = 0, title = 'Loading..', image = defaultImage, isActiveId }) => {
+export const CategoryItem:FC<CategoryItemProps> = ({ id = 0, title = 'Loading..', image = defaultImage, isActiveId }) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const reset = () => {
         dispatch(resetFilters())
     }
-
         
     return (
         <Li onClick={reset} style={{boxShadow: `${isActiveId == id ? '3px 3px 3px #007ce190' : ''}`}}>

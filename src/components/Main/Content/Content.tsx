@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { FilterBar } from "./FilterBar/FilterBar"
 import { ProductsList } from "./ProductsList/ProductsList"
+import { FC } from "react"
 
 const ContentWrapper = styled.section`
     width: 100%;
@@ -10,7 +11,7 @@ const ContentWrapper = styled.section`
     flex: 1 1 auto;
 `
 
-export const Content = () => {
+export const Content:FC = () => {
     return (
         <ContentWrapper>
             <FilterBar />

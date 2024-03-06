@@ -1,8 +1,8 @@
 import { Button, Select } from "antd";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { filterByFeatures, resetFilters, sortByPrice } from "../../../../Redux/Slices/productsSlice";
-import { useState } from "react";
+import { FC, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/hook";
 
 const BarWrapper = styled.section`
   width: 100%;
@@ -18,14 +18,14 @@ const BarWrapper = styled.section`
   }
 `;
 
-export const FilterBar = () => {
-  const { defaultsSelect } = useSelector(({ products }) => products);
+export const FilterBar:FC = () => {
+  const { defaultsSelect } = useAppSelector((state) => state.products);
   const [featureValue, setFeatureValue] = useState(defaultsSelect[0]);
   const [priceValue, setPriceValue] = useState(defaultsSelect[1]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const handleFeatures = (value) => {
+  const handleFeatures = (value: string) => {
     setFeatureValue(value);
     dispatch(filterByFeatures(value));
   };
@@ -36,7 +36,7 @@ export const FilterBar = () => {
     setPriceValue(defaultsSelect[1]);
   };
 
-  const handlePrice = (value) => {
+  const handlePrice = (value: string) => {
     setPriceValue(value);
     dispatch(sortByPrice(value));
   };

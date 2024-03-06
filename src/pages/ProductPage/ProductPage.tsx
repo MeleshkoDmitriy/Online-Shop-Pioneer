@@ -3,7 +3,7 @@ import { Container } from "../../styles/styles"
 import { Aside } from "../../components/Main/Aside/Aside"
 import { useNavigate, useParams } from "react-router-dom"
 import { useGetProductQuery } from "../../Redux/Slices/api/apiSlice"
-import { useEffect } from "react"
+import { FC, useEffect } from "react"
 import { ROUTES } from "../../utils/routes"
 import { SingleProduct } from "../../components/SingleProduct/SingleProduct"
 
@@ -15,8 +15,7 @@ const ProductPageWrapper = styled.div`
     flex: 1 1 auto;
 `
 
-
-export const ProductPage = () => {
+export const ProductPage:FC = () => {
 
     const { id } = useParams();
 
@@ -26,7 +25,7 @@ export const ProductPage = () => {
 
     useEffect(() => {
         if(!isFetching && !isLoading && !isSuccess) {
-            navigate(ROUTES.HOME)
+            navigate(ROUTES.HOME);
         }
     }, [isLoading, isSuccess, isFetching])
 

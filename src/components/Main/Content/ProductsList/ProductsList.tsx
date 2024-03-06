@@ -3,7 +3,7 @@ import { ProductItem } from "./ProductItem/ProductItem"
 import { Skeleton } from "antd"
 import { loadingArray } from "../../../../utils/variable"
 import { useAppSelector } from "../../../../hooks/hook"
-
+import { FC } from "react"
 
 const ListWrapper = styled.section`
     width: 100%;
@@ -20,7 +20,7 @@ const SkeletonProduct = styled.div`
     height: 450px;
 `
 
-export const ProductsList = () => {
+export const ProductsList:FC = () => {
 
     const { products: { isLoading, list } } = useAppSelector((state) => state);
 

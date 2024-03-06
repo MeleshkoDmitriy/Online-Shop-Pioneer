@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { AppRoutes } from './components/Routes/Routes'
 import { Header } from './components/Header/Header'
 import { Footer } from './components/Footer/Footer'
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { getCategories } from './Redux/Slices/categoriesSlice'
 import { getProducts } from './Redux/Slices/productsSlice'
 import { Drawer } from 'antd';
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `
 
-function App() {
+export const App:FC = () => {
 
   const dispatch = useAppDispatch();
 
@@ -31,10 +31,10 @@ function App() {
 
   const [ openFavorites, setOpenFavorites] = useState(false);
   const showFavorites = () => {
-    setOpenFavorites(true)
+    setOpenFavorites(true);
   }
   const onCloseFavorites = () => {
-    setOpenFavorites(false)
+    setOpenFavorites(false);
   }
 
   const [ openCart, setOpenCart] = useState(false);

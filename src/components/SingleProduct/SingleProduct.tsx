@@ -11,8 +11,6 @@ import { useUpdateFavoriteMutation } from "../../Redux/Slices/api/apiSlice";
 import { TProduct } from "../../types/types";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 
-
-
 const SingleProductWrapper = styled.section`
     width: 100%;
     height: 100%;
@@ -98,19 +96,12 @@ export const SingleProduct: FC<TProduct> = (data) => {
 
     const [messageApi, contextHolder] = message.useMessage();
     const [ isLiked, setLiked] = useState(isFavorite);
-    console.log('data',data)
-    console.log('isFavorite',isFavorite)
-    console.log('isLiked',isLiked)
-
-
 
     useEffect(() => {
         if(!data) return;
 
         setLiked(isFavorite)
     }, [ isFavorite ])
-
-
 
     const favoriteContent = () => {
         return isLiked  ? title + " was deleted from Favorites"
@@ -136,8 +127,8 @@ export const SingleProduct: FC<TProduct> = (data) => {
 
 
     const addToCart = () => {
-        dispatch(addProductToCart(data))
-        successCart(data)
+        dispatch(addProductToCart(data));
+        successCart(data);
     }
 
     const addToFavorites = () => {
@@ -154,7 +145,7 @@ export const SingleProduct: FC<TProduct> = (data) => {
     })
 
     const textRef = useRef('Text Badge');
-    const colorRef = useRef('White')
+    const colorRef = useRef('White');
 
     useEffect(() => {
         if(!data) return;

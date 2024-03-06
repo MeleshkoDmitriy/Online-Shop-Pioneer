@@ -1,12 +1,11 @@
-import { Button, Input, Rate } from "antd";
+import { Button, Input } from "antd";
 import styled from "styled-components"
 import { toCapitalize } from "../../../../utils/toCapitalize";
 import { DeleteOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
-import { useDispatch } from "react-redux";
 import { addProductToCart, minusProductFromCart, removeProductFromCart } from "../../../../Redux/Slices/userSlice";
-import { useDeleteFromCartMutation } from "../../../../Redux/Slices/api/apiSlice";
 import { TCartProduct } from "../../../../types/types";
 import { useAppDispatch } from "../../../../hooks/hook";
+import { FC } from "react";
 
 
 
@@ -51,16 +50,14 @@ const Item = styled.li`
     }
 `
 
-export const CartItem = (cart: TCartProduct) => {
+export const CartItem:FC = (cart: TCartProduct) => {
 
     const { 
-        id,
         title,
         img,
         category,
         price,
         features,
-        isCart,
         quantity
     } = cart;
 
@@ -70,11 +67,11 @@ export const CartItem = (cart: TCartProduct) => {
 
 
     const addToCart = () => {
-        dispatch(addProductToCart(cart))
+        dispatch(addProductToCart(cart));
     }
 
     const minusProduct = () => {
-        dispatch(minusProductFromCart(cart))
+        dispatch(minusProductFromCart(cart));
     }
 
     const removeFromCart = () => {

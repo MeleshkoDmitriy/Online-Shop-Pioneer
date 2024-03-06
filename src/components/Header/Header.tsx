@@ -5,9 +5,8 @@ import { Link } from "react-router-dom"
 import { ROUTES } from "../../utils/routes"
 import { HeartOutlined, HeartFilled, ShoppingOutlined, ShoppingFilled, LoginOutlined } from '@ant-design/icons'
 import { Badge } from "antd"
-import { useDispatch, useSelector } from "react-redux"
-import { resetFilters } from "../../Redux/Slices/productsSlice"
-
+import { FC } from "react"
+import { useAppSelector } from "../../hooks/hook"
 
 const HeaderWrapper = styled.header`
     width: 100%;
@@ -21,7 +20,6 @@ const HeaderWrapper = styled.header`
     transition-timing-function: ease-in-out;
 
 `
-
 const LogoContainer = styled.div`
     transition: ${props => props.theme.transition.fast};
     position: relative;
@@ -44,7 +42,6 @@ const LogoContainer = styled.div`
 
     }
 `
-
 const Menu = styled.ul`
     list-style-type: none;
     display: flex;
@@ -103,10 +100,14 @@ const Menu = styled.ul`
     }
 
 `
+interface HeaderProps {
+    showFavorites: () => void;
+    showCart: () => void;
+}
 
-export const Header = ({showFavorites, showCart}) => {
+export const Header:FC<HeaderProps> = ({showFavorites, showCart}) => {
 
-    const { cart, favorites } = useSelector(({ user }) => user);
+    const { cart, favorites } = useAppSelector((state) => state.user);
 
     return (
         <HeaderWrapper >
@@ -116,7 +117,6 @@ export const Header = ({showFavorites, showCart}) => {
                         <img src={LOGO} alt="Logo" title="Home Page" />
                     </Link>
                 </LogoContainer>
-
                 <Menu>
                     <li className="line" onClick={showFavorites}>Favorites
                         <Badge count={favorites.length} offset={[3, -2]} color="#007de1" size="small">
@@ -136,7 +136,6 @@ export const Header = ({showFavorites, showCart}) => {
                         </a><LoginOutlined className="icon"  />
                     </li>
                 </Menu>
-
             </Container>
         </HeaderWrapper>
     )

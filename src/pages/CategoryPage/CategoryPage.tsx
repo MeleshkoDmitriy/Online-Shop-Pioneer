@@ -6,7 +6,7 @@ import { ProductItem } from "../../components/Main/Content/ProductsList/ProductI
 import { Skeleton } from "antd";
 import { loadingArray } from "../../utils/variable";
 import { useAppSelector } from "../../hooks/hook";
-import { TProduct } from "../../types/types";
+import { FC } from "react";
 
 const CategoryPageWrapper = styled.div`
     min-height: 100%;
@@ -29,14 +29,13 @@ const SkeletonCategory = styled.div`
     height: 450px;
 `
 
-export const CategoryPage = () => {
+export const CategoryPage:FC = () => {
 
-    
     const { id } = useParams();
 
     const { list, isLoading } = useAppSelector((state) => state.products)
 
-    const categoryList = list.filter((product) => product.categoryId == id)
+    const categoryList = list.filter((product) => product.categoryId === Number(id))
 
     return (
         <CategoryPageWrapper>

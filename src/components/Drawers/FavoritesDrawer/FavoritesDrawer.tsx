@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { FavoriteItem } from "./FavoriteItem/FavoriteItem"
+import { TProduct } from "../../../types/types"
+import { FC } from "react"
 
 
 
@@ -16,7 +18,11 @@ const BodySection = styled.ul`
     padding: 0;
 `
 
-export const FavoritesDrawer = ({favorites}) => {
+interface FavoritesDrawerProps {
+    favorites: TProduct[]
+}
+
+export const FavoritesDrawer:FC<FavoritesDrawerProps> = ({favorites}) => {
     return (
         <Wrapper>
             <BodySection>

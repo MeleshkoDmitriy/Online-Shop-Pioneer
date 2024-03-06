@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Container } from "../../styles/styles"
 import { GithubOutlined } from '@ant-design/icons'
+import { FC } from "react"
 
 const FooterWrapper = styled.footer`
     width: 100%;
@@ -9,7 +10,6 @@ const FooterWrapper = styled.footer`
     background-color: ${props => props.theme.colors.black};
     color: ${props => props.theme.colors.white};
 `
-
 const GitHubLink = styled.a`
     color: ${props => props.theme.colors.gray};
     text-decoration: none;
@@ -45,9 +45,7 @@ const GitHubLink = styled.a`
     }
 `
 
-export const Footer = () => {
-
-
+export const Footer:FC = () => {
     return (
         <FooterWrapper>
             <Container align="center">
@@ -55,7 +53,9 @@ export const Footer = () => {
                     <GitHubLink href="https://github.com/MeleshkoDmitriy/Online-Shop-Pioneer" 
                                 target="blank" 
                                 rel="noreferrer">
-                         <span className="line"><GithubOutlined spin style={{fontSize: "20px"}} /> GitHub.</span> Developed by Dmitriy Meleshko. Online Shop 2024.
+                        <span className="line">
+                            <GithubOutlined spin style={{fontSize: "20px"}} /> GitHub.
+                        </span> Developed by Dmitriy Meleshko. Online Shop 2024.
                     </GitHubLink>
                 </span>
             </Container>

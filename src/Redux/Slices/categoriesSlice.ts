@@ -3,7 +3,7 @@ import axios from "axios";
 import { CATEGORIES_URL } from "../../utils/services/services.api";
 import { TCategory } from "../../types/types";
 
-export const getCategories = createAsyncThunk('categories/getCategories',
+export const getCategories = createAsyncThunk<TCategory[], undefined>('categories/getCategories',
     async (_, thunkApi) => {
         try {
             const res = await axios.get(`${CATEGORIES_URL}`);

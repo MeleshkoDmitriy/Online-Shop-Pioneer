@@ -6,7 +6,7 @@ import { Rate, Badge } from 'antd';
 import { defineFeatureColor, defineFeatureString } from "../../../../../utils/defineFeature";
 import styled from "styled-components";
 import { addProductToCart, addProductToFavorites } from "../../../../../Redux/Slices/userSlice";
-import { useEffect, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { useUpdateFavoriteMutation } from "../../../../../Redux/Slices/api/apiSlice";
 import { TProduct } from "../../../../../types/types";
 import { useAppDispatch } from "../../../../../hooks/hook";
@@ -19,7 +19,6 @@ const Wrapper = styled.div`
     }
     .ant-card-hoverable:hover {
         box-shadow: 7px 7px 5px ${props => props.theme.colors.lightGray};
-        /* box-shadow: 7px 7px 5px #0000ff; */
     }
 `
 const ActionsWrapper = styled.div`
@@ -30,7 +29,7 @@ const ActionsWrapper = styled.div`
 
 const { Meta } = Card;
 
-export const ProductItem = (product: TProduct) => {
+export const ProductItem:FC<TProduct> = (product) => {
 
     const { 
         id, 
@@ -43,17 +42,17 @@ export const ProductItem = (product: TProduct) => {
         features
     } = product;
 
+    const dispatch = useAppDispatch();
+    const [ updateFavorite ] = useUpdateFavoriteMutation();
+
     const [messageApi, contextHolder] = message.useMessage();
-    const [ isLiked, setLiked] = useState(isFavorite);
+    const [ isLiked, setLiked] = useState<boolean>(isFavorite);
 
     useEffect(() => {
         if(!product) return;
 
         setLiked(isFavorite);
-    }, [isFavorite])
-
-    // console.log(product)
-
+    }, [ isFavorite ])
 
     const { isSale } = features;
 
@@ -69,18 +68,14 @@ export const ProductItem = (product: TProduct) => {
         });
       };
 
-      const successCart = (data) => {
+      const successCart = (data: TProduct) => {
           messageApi.open({
             type: 'success',
             content: `${data.title} was added to Cart`,
           });
         };
-    
-    const dispatch = useAppDispatch();
-    const [ updateFavorite ] = useUpdateFavoriteMutation();
 
-    
-    const addToCart = (e) => {
+    const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -88,7 +83,7 @@ export const ProductItem = (product: TProduct) => {
         successCart(product);
     }
 
-    const addToFavorites = (e) => {
+    const addToFavorites = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
 

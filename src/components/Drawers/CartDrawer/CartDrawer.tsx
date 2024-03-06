@@ -3,9 +3,10 @@ import styled from "styled-components"
 import { CartItem } from "./CartItem/CartItem"
 import { CheckOutlined } from '@ant-design/icons'
 import { useSendOrderMutation } from "../../../Redux/Slices/api/apiSlice"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { FC } from "react"
 import { cleanUpCart } from "../../../Redux/Slices/userSlice"
+import { TCartProduct } from "../../../types/types"
+import { useAppDispatch } from "../../../hooks/hook"
 
 
 
@@ -51,11 +52,15 @@ const FooterSection = styled.div`
     }
 `
 
-export const CartDrawer = ({cart}) => {
+interface CartDrawerProps {
+    cart: TCartProduct[]
+}
+
+export const CartDrawer:FC<CartDrawerProps> = ({cart}) => {
 
     const [messageApi, contextHolder] = message.useMessage();
-    const [sendOrder, { isLoading: isLoadingSendOrder }] = useSendOrderMutation();
-    const dispatch = useDispatch();
+    const [ sendOrder ] = useSendOrderMutation();
+    const dispatch = useAppDispatch();
 
     const totalPrice = cart.reduce((sum, product) => {
         return sum + (product.price * product.quantity)
@@ -66,7 +71,7 @@ export const CartDrawer = ({cart}) => {
         .then(() => {
             messageApi.open({
                 type: 'loading',
-                content: 'Your order is processiding...',
+                content: 'Your order is processing...',
                 duration: 1,
               });
               setTimeout(() => {
@@ -100,7 +105,7 @@ export const CartDrawer = ({cart}) => {
                                         <Button onClick={makeOrder}
                                                 className="order" type="primary">Make order<CheckOutlined /></Button>
                                     </FooterSection>
-                                : ''}
+                                :   ''}
 
             </BodySection>
         </Wrapper>
