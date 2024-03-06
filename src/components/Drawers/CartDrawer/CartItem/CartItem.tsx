@@ -50,7 +50,7 @@ const Item = styled.li`
     }
 `
 
-export const CartItem:FC = (cart: TCartProduct) => {
+export const CartItem:FC<TCartProduct> = (cart) => {
 
     const { 
         title,
