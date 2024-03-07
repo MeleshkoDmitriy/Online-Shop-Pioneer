@@ -3,7 +3,7 @@ import axios from "axios"
 import { PRODUCTS_URL } from "../../utils/services/services.api"
 import { TCartProduct, TProduct } from "../../types/types"
 
-export const getProducts = createAsyncThunk<TProduct[], undefined>('products/getProducts',
+const getProducts = createAsyncThunk<TProduct[], undefined>('products/getProducts',
     async (_, thunkApi) => {
         try {
             const res = await axios.get(`${PRODUCTS_URL}`);
@@ -45,8 +45,6 @@ const userSlice = createSlice({
             }
 
             state.cart = newCart;
-            console.log(state.cart)
-
         },
         minusProductFromCart: (state, { payload }) => {
             let newCart = [...state.cart];
@@ -83,7 +81,6 @@ const userSlice = createSlice({
             }
 
             state.cart = newCart;
-            console.log(state.cart)
         },
         cleanUpCart: (state) => {
             state.cart = [];
@@ -100,8 +97,19 @@ const userSlice = createSlice({
             }
 
             state.favorites = newFavorites;
-            console.log(state.favorites)
+        },
+        removeProductFromFavorites: (state, { payload }) => {
+            let newFavorites = [...state.favorites];
 
+            const foundProduct = state.favorites.find(({ id }) => id === payload.id);
+
+            if (foundProduct) {
+                newFavorites = newFavorites.filter((fav) => fav.id !== payload.id)
+            } else {
+                return;
+            }
+
+            state.favorites = newFavorites;
         },
 
     },
@@ -120,6 +128,13 @@ const userSlice = createSlice({
     }
 })
 
-export const { addProductToCart, addProductToFavorites, removeProductFromCart, minusProductFromCart, cleanUpCart } = userSlice.actions;
+export const { 
+    addProductToCart, 
+    addProductToFavorites, 
+    removeProductFromCart,
+    minusProductFromCart,
+    cleanUpCart,
+    removeProductFromFavorites 
+} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -10,14 +10,19 @@ export const apiSlice = createApi({
     endpoints: (builder) => ({
         getProduct: builder.query({
             query:({ id }) => `/products/${id}`,
-            providesTags: ['Product']
+            providesTags: () => [{
+                type: 'Product'
+            }]
         }),
         updateFavorite: builder.mutation({
             query:({ id, isFavorite }) => ({
                 url:  `/products/${id}`,
                 method: "PATCH",
                 body: { isFavorite: !isFavorite }
-            })
+            }),
+            invalidatesTags: () => [{
+                type: 'Product'
+            }]
         }),
         sendOrder: builder.mutation({
             query: order => ({

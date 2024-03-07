@@ -9,7 +9,7 @@ import { addProductToCart, addProductToFavorites } from "../../../../../Redux/Sl
 import { FC, MouseEvent, useEffect, useState } from "react";
 import { useUpdateFavoriteMutation } from "../../../../../Redux/Slices/api/apiSlice";
 import { TProduct } from "../../../../../types/types";
-import { useAppDispatch } from "../../../../../hooks/hook";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks/hook";
 
 const Wrapper = styled.div`
     transition: ${props => props.theme.transition.fast};
@@ -43,16 +43,23 @@ export const ProductItem:FC<TProduct> = (product) => {
     } = product;
 
     const dispatch = useAppDispatch();
+    const { favorites: userFavorites } = useAppSelector((state) => state.user)
     const [ updateFavorite ] = useUpdateFavoriteMutation();
 
     const [messageApi, contextHolder] = message.useMessage();
     const [ isLiked, setLiked] = useState<boolean>(isFavorite);
 
-    useEffect(() => {
-        if(!product) return;
+    const isFavoriteTrue = userFavorites.some((fav) => fav.id === id);
 
-        setLiked(isFavorite);
-    }, [ isFavorite ])
+    useEffect(() => {
+        if(!userFavorites) {
+            return;
+        } else if (!isFavoriteTrue) {
+            return;
+        }
+
+        setLiked(true);
+    }, [ isFavoriteTrue, userFavorites ])
 
     const { isSale } = features;
 

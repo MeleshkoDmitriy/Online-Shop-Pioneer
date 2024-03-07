@@ -2,7 +2,7 @@ import { Button, Rate, message } from "antd";
 import styled from "styled-components"
 import { toCapitalize } from "../../../../utils/toCapitalize";
 import { ShoppingOutlined, DeleteOutlined } from '@ant-design/icons';
-import { addProductToCart, addProductToFavorites } from "../../../../Redux/Slices/userSlice";
+import { addProductToCart, removeProductFromFavorites } from "../../../../Redux/Slices/userSlice";
 import { useUpdateFavoriteMutation } from "../../../../Redux/Slices/api/apiSlice";
 import { useAppDispatch } from "../../../../hooks/hook";
 import { TProduct } from "../../../../types/types";
@@ -19,7 +19,7 @@ const Item = styled.li`
     justify-content: space-between;
 
     .image img {
-            max-width: 100px;
+        max-width: 100px;
     }
 
 
@@ -46,15 +46,15 @@ export const FavoriteItem:FC<TProduct> = (favorite: TProduct) => {
     const [ messageApi, contextHolder ] = message.useMessage();
     const [ updateFavorite ] = useUpdateFavoriteMutation();
 
+    const dispatch = useAppDispatch();
+
     const { 
-        id,
         title,
         img,
         category,
         price,
         rating,
         features,
-        isFavorite,
     } = favorite;
 
     const { isSale } = features;
@@ -66,16 +66,14 @@ export const FavoriteItem:FC<TProduct> = (favorite: TProduct) => {
         });
       };
 
-    const dispatch = useAppDispatch();
-
     const addToCart = () => {
         dispatch(addProductToCart(favorite));
         successCart(favorite);
     }
 
     const removeFromFavorites = () => {
-        dispatch(addProductToFavorites(favorite));
-        updateFavorite({ id, isFavorite }).unwrap();
+        updateFavorite(favorite).unwrap();
+        dispatch(removeProductFromFavorites(favorite));
     }
 
     return (
